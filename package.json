@@ -1,0 +1,21 @@
+{
+  "name": "how2",
+  "version": "0.0.1",
+  "description": "A tool for searching local documentation written in markdown",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://shadowstrafe.duckdns.org/git_repos/how2"
+  },
+  "author": "Lee Chengkai (leechengkai@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "markdown-it": "^8.4.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
