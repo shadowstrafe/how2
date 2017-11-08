@@ -13,9 +13,8 @@ module.exports = function (compiledTemplate) {
             return callback(null, file);
         }
         if (file.isBuffer()) {
-            let data = file.frontMatter;
+            let data = file.data;
             data.content = file.contents.toString();
-            data.csspath = file.data.csspath;
             file.contents = new Buffer(compiledTemplate(data));
         }
         if (file.isStream()) {

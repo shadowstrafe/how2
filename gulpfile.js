@@ -8,6 +8,8 @@ var hljs = require('highlight.js');
 var markdown = require('gulp-markdownit');
 
 var useTemplate = require('./build/insert_into_template.js');
+var insertDb = require('./build/insert-into-db.js');
+var db = require('./build/how2db.js');
 
 gulp.task('default', function () {
     const mdConfig = {
@@ -32,16 +34,27 @@ gulp.task('default', function () {
     const template = fs.readFileSync('./build/how2.template');
     var compiled = handlebars.compile(template.toString());
 
+    const baseDistpath = 'localhost/';
+
+    db.Open();
+    db.CreateTables();
+
     return gulp.src('src/**/*.md')
-        .pipe(frontMatter())
+        .pipe(frontMatter({
+            property: 'data',
+            remove: true
+        }))
         .pipe(data(function (file) {
-            let n = file.relative.split(/\/|\\/).length;
+            var normalizedFilePath = file.relative.replace(/\\/g, '/');
+            let n = normalizedFilePath.split('/').length;
             return {
-                csspath: '../'.repeat(n - 1) + 'how2.css'
+                csspath: '../'.repeat(n - 1) + 'how2.css',
+                distpath: baseDistpath + normalizedFilePath
             };
         }))
         .pipe(markdown(mdConfig))
         .pipe(useTemplate(compiled))
+        .pipe(insertDb())
         .pipe(gulp.dest('dist'));
 });
 
