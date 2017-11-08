@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var db = require('./build/how2db.js');
 
 // var argparse = require('argparse').ArgumentParser;
