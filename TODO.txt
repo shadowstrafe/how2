@@ -1,3 +1,9 @@
-1) Write metadata to a database
-2) Create console application to consume the database
-3) Figure out watching for file changes and updating database and doc files
+1) Figure out watching for file changes and updating database and doc files
+2) Make it installable as a global shell command
+  
+  $> npm install -g
+
+2a) This will require making srcpath and distpath configurables
+2b) possibly use ~/.how2.config
+3) Allow user to navigate and select a howto
+4) Launch web server and open url on selection
