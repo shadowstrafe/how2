@@ -8,7 +8,9 @@ This project is a fork of how2 that instead uses markdown-it, nodejs and gulp in
 
 1) Place how2 markdown files in ~/src/
 
-2) Run gulp build task
+2) Update template as necessary
+
+3) Run gulp build task
 
 ``` sh
 $> gulp

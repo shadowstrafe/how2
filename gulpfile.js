@@ -29,7 +29,7 @@ gulp.task('default', function () {
         }
     };
 
-    const template = fs.readFileSync('./how2.template');
+    const template = fs.readFileSync('./build/how2.template');
     var compiled = handlebars.compile(template.toString());
 
     return gulp.src('src/**/*.md')
