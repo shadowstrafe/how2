@@ -1,0 +1,3 @@
+1) Write metadata to a database
+2) Create console application to consume the database
+3) Figure out watching for file changes and updating database and doc files
