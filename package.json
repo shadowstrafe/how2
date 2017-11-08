@@ -12,7 +12,9 @@
   },
   "author": "Lee Chengkai (leechengkai@gmail.com)",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "sqlite3": "^3.1.13"
+  },
   "devDependencies": {
     "del": "^3.0.0",
     "gulp": "^3.9.1",
