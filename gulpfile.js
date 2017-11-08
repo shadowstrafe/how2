@@ -45,11 +45,14 @@ gulp.task('default', function () {
             remove: true
         }))
         .pipe(data(function (file) {
-            var normalizedFilePath = file.relative.replace(/\\/g, '/');
-            let n = normalizedFilePath.split('/').length;
+            let normalizedFilePath = file.relative.replace(/\\/g, '/');
+            let normalizedFilePathSegments = normalizedFilePath.split('/');
+            let n = normalizedFilePathSegments.length;
             return {
                 csspath: '../'.repeat(n - 1) + 'how2.css',
-                distpath: baseDistpath + normalizedFilePath
+                distpath: baseDistpath + normalizedFilePath.replace('.md', '.html'),
+                sourcepath: file.path,
+                category: normalizedFilePathSegments.slice(0, -1).join('/')
             };
         }))
         .pipe(markdown(mdConfig))
