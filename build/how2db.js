@@ -11,22 +11,14 @@ db.defaults({
 }).write();
 
 module.exports = {
-  Insert: function (category, title, distpath, sourcepath, tags) {
-    var howto = {
-      category: category,
-      title: title,
-      distpath: distpath,
-      sourcepath: sourcepath,
-      tags: tags
-    };
-
+  Insert: function (howto) {
     db.get('howtos')
       .push(howto)
       .write();
   },
-  Delete: function (sourcepath) {
+  Delete: function (path) {
     db.get('howtos')
-      .remove(function (howto) { return howto.sourcepath === sourcepath; })
+      .remove(function (howto) { return howto.path === path; })
       .write();
   },
   Get: function (category, tags) {

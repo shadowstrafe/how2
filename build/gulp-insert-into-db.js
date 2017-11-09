@@ -4,7 +4,12 @@ var db = require('./how2db');
 module.exports = function () {
   return through.obj(function (file, encoding, callback) {
     let data = file.data;
-    db.Insert(data.category, data.title, data.distpath, data.sourcepath, data.tags);
+    db.Insert({
+      category: data.category,
+      title: data.title,
+      tags: data.tags,
+      path: data.relativepath
+    });
     callback(null, file);
   });
 };
