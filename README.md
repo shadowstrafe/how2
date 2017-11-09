@@ -1,24 +1,20 @@
 # Overview
 
-This project is a fork of how2 that instead uses markdown-it, nodejs and gulp instead of pandoc and python for massive speed improvements.
+This project is a fork of how2 that instead uses markdown-it, nodejs and gulp instead of pandoc and python for speed improvements, better control over the output, and better integration with vscode.
 
 # Usage
 
 ## Building
 
-1) Place how2 markdown files in ~/src/
-
-2) Update template as necessary
-
-3) Run gulp build task
-
-``` sh
+``` shell
 $> gulp
 ```
 
-## Watch
+## Watching
 
-We can also watch for file changes with the watch task
+``` shell
+$> gulp watch
+```
 
 ## Search for related how-tos
 
