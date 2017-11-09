@@ -10,3 +10,4 @@
 4) Launch web server? and open url on selection
 5) Turn on syntax highlighting
 6) Consider switching to gulp4 alpha
+7) Make building a command line option (will require gulp-runner)
