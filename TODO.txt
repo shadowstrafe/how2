@@ -2,9 +2,7 @@
   
   $> npm install -g
 
-2) template and css configs (possible enhancement of multiple css files?), plus copying them over to dist root
-3) Allow user to navigate and select a howto
-4) Launch web server? and open url on selection
-5) Turn on syntax highlighting
-6) Consider switching to gulp4 alpha
-7) Make building files (and watching) a command line option (will require gulp-runner)
+2) Allow user to navigate and select a howto
+3) Launch web server? and open url on selection
+4) Consider switching to gulp4 alpha
+5) Make building files (and watching) a command line option (will require gulp-runner)

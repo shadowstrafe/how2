@@ -37,12 +37,13 @@ const mdConfig = {
   }
 };
 
-const template = fs.readFileSync('./build/how2.template');
+const template = fs.readFileSync(SRC_PATH + '/how2.template');
 var compiled = handlebars.compile(template.toString());
 
-gulp.task('default', ['build']);
+gulp.task('default', ['build', 'assets']);
 
-gulp.task('build', function () {
+gulp.task('build', ['clean'], function () {
+  // Rebuild
   return gulp.src(slash(SRC_PATH) + '/**/*.md')
     .pipe(frontMatter({
       property: 'data',
@@ -54,7 +55,7 @@ gulp.task('build', function () {
       let normalizedFilePathSegments = normalizedFilePath.split('/');
       let n = normalizedFilePathSegments.length;
       return {
-        csspath: '../'.repeat(n - 1) + 'how2.css',
+        rootdir: '../'.repeat(n - 1),
         relativepath: normalizedFilePath,
         category: normalizedFilePathSegments.slice(0, -1).join('/')
       };
@@ -65,8 +66,8 @@ gulp.task('build', function () {
     .pipe(gulp.dest(DIST_PATH));
 });
 
-gulp.task('css', function () {
-  return gulp.src('./build/**.css')
+gulp.task('assets', ['clean'], function () {
+  return gulp.src(slash(SRC_PATH) + '/*.css')
     .pipe(gulp.dest(DIST_PATH));
 });
 
@@ -101,7 +102,7 @@ gulp.task('watch', function () {
           let normalizedFilePathSegments = normalizedFilePath.split('/');
           let n = normalizedFilePathSegments.length;
           return {
-            csspath: '../'.repeat(n - 1) + 'how2.css',
+            rootdir: '../'.repeat(n - 1),
             relativepath: normalizedFilePath,
             category: normalizedFilePathSegments.slice(0, -1).join('/')
           };
