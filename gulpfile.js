@@ -7,8 +7,8 @@ var handlebars = require('handlebars');
 var hljs = require('highlight.js');
 var markdown = require('gulp-markdownit');
 
-var useTemplate = require('./build/insert_into_template.js');
-var insertDb = require('./build/insert-into-db.js');
+var useTemplate = require('./build/gulp-use-template.js');
+var insertDb = require('./build/gulp-insert-into-db.js');
 var db = require('./build/how2db.js');
 
 gulp.task('default', function () {
