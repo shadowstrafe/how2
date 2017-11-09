@@ -26,13 +26,14 @@ const mdConfig = {
     highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try {
-          return hljs.highlight(lang, str).value;
-        } catch (__) {
-          return '';
-        }
+          return '<pre class="hljs"><code>' +
+                 hljs.highlight(lang, str, true).value +
+                 '</code></pre>';
+        } catch (_) {}
       }
 
-      return ''; // use external default escaping
+      // use external default escaping
+      return '';
     }
   }
 };
