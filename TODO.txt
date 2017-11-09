@@ -3,7 +3,9 @@
   
   $> npm install -g
 
-2a) This will require making srcpath and distpath configurables
+2a) This will require making srcpath and distpath configurables?
 2b) possibly use ~/.how2.config
+2c) it should also have template and css configs (possible enhancement of multiple css files?)
 3) Allow user to navigate and select a howto
-4) Launch web server and open url on selection
+4) Launch web server? and open url on selection
+5) Turn on syntax highlighting
