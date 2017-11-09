@@ -6,6 +6,7 @@ var gulp = require('gulp');
 var handlebars = require('handlebars');
 var hljs = require('highlight.js');
 var markdown = require('gulp-markdownit');
+var escape = require('markdown-it')().utils.escapeHtml;
 var path = require('path');
 var slash = require('slash');
 var watch = require('gulp-watch');
@@ -27,13 +28,14 @@ const mdConfig = {
       if (lang && hljs.getLanguage(lang)) {
         try {
           return '<pre class="hljs"><code>' +
-                 hljs.highlight(lang, str, true).value +
-                 '</code></pre>';
-        } catch (_) {}
+            hljs.highlight(lang, str, true).value +
+            '</code></pre>';
+        } catch (_) { }
       }
 
-      // use external default escaping
-      return '';
+      return '<pre class="hljs"><code>' +
+        escape(str) +
+        '</code></pre>';
     }
   }
 };
