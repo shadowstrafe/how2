@@ -9,7 +9,6 @@ var markdown = require('gulp-markdownit');
 
 var useTemplate = require('./build/gulp-use-template.js');
 var insertDb = require('./build/gulp-insert-into-db.js');
-var db = require('./build/how2db.js');
 
 gulp.task('default', function () {
     const mdConfig = {
@@ -35,9 +34,6 @@ gulp.task('default', function () {
     var compiled = handlebars.compile(template.toString());
 
     const baseDistpath = 'localhost/';
-
-    db.Open();
-    db.CreateTables();
 
     return gulp.src('src/**/*.md')
         .pipe(frontMatter({

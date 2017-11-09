@@ -6,7 +6,7 @@ var config = require('./build/config.js');
 var program = require('commander');
 
 program.version('0.0.1')
-    .option('--category, -c', 'Limit the search to the provided CATEGORY')
+    .option('-c, --category <CATEGORY>', 'Limit the search to the provided CATEGORY')
     .parse(process.argv);
 
 var tags = program.args;
@@ -24,10 +24,7 @@ if (category) {
     console.log(`Searching within the category '${category}'.`);
 }
 
-db.Open();
-db.Get(category, tags, function (err, rows) {
-    console.log(rows);
-});
-db.Close();
+var rows = db.Get(category, tags);
+console.log(rows);
 
 console.log(config);
