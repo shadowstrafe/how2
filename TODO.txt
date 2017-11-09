@@ -1,13 +1,10 @@
-1) Figure out watching for file changes and updating database and doc files
-2) Make it installable as a global shell command
+1) Make it installable as a global shell command
   
   $> npm install -g
 
-2a) This will require making srcpath and distpath configurables?
-2b) possibly use ~/.how2.config
-2c) it should also have template and css configs (possible enhancement of multiple css files?)
+2) template and css configs (possible enhancement of multiple css files?), plus copying them over to dist root
 3) Allow user to navigate and select a howto
 4) Launch web server? and open url on selection
 5) Turn on syntax highlighting
 6) Consider switching to gulp4 alpha
-7) Make building a command line option (will require gulp-runner)
+7) Make building files (and watching) a command line option (will require gulp-runner)

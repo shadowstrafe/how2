@@ -43,7 +43,7 @@ var compiled = handlebars.compile(template.toString());
 gulp.task('default', ['build']);
 
 gulp.task('build', function () {
-  return gulp.src(SRC_PATH + '/**/*.md')
+  return gulp.src(slash(SRC_PATH) + '/**/*.md')
     .pipe(frontMatter({
       property: 'data',
       remove: true
@@ -75,25 +75,22 @@ gulp.task('clean', function () {
 });
 
 gulp.task('watch', function () {
-  var watchglob = slash(SRC_PATH + '/**/*.md');
+  var watchglob = slash(SRC_PATH) + '/**/*.md';
   console.log('Watching ' + watchglob);
-  return watch(watchglob, { base: SRC_PATH }, function (file) {
+  return watch(watchglob, function (file) {
     var event = file.event;
     // Normalize to unix-like/url-like relative path without extension
     var normalizedFilePath = slash(file.relative).replace(/.md$/, '');
     var destFilePath = path.join(DIST_PATH, normalizedFilePath + '.html');
 
-    console.log(event + ' triggered');
-
+    var now = new Date().toTimeString();
     if (event === 'unlink' || event === 'change') {
-      console.log('Removing db entry with ' + normalizedFilePath);
-      console.log('Deleting file at ' + destFilePath);
+      console.log(now + ':Deleting file at ' + destFilePath);
       db.Delete(normalizedFilePath);
       del.sync(destFilePath);
     }
     if (event === 'add' || event === 'change') {
-      console.log('Building from source file ' + file.path);
-      console.log('Inserting db entry with ' + normalizedFilePath);
+      console.log(now + ':Building from source file ' + file.path);
 
       gulp.src(file.path, { base: SRC_PATH })
         .pipe(frontMatter({
