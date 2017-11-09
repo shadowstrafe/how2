@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^2.11.0",
+    "home-config": "^0.1.0",
     "sqlite3": "^3.1.13"
   },
   "devDependencies": {

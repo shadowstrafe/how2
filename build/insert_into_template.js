@@ -15,7 +15,7 @@ module.exports = function (compiledTemplate) {
         if (file.isBuffer()) {
             let data = file.data;
             data.content = file.contents.toString();
-            file.contents = new Buffer(compiledTemplate(data));
+            file.contents = Buffer.from(compiledTemplate(data));
         }
         if (file.isStream()) {
             this.emit('error', new PluginError(PLUGIN_NAME, 'Streams not supported!'));

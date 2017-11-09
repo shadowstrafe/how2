@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 var db = require('./build/how2db.js');
+var config = require('./build/config.js');
 
-// var argparse = require('argparse').ArgumentParser;
 var program = require('commander');
 
 program.version('0.0.1')
@@ -29,3 +29,5 @@ db.Get(category, tags, function (err, rows) {
     console.log(rows);
 });
 db.Close();
+
+console.log(config);
