@@ -8,6 +8,7 @@ var hljs = require('highlight.js');
 var markdown = require('gulp-markdownit');
 var path = require('path');
 var slash = require('slash');
+var watch = require('gulp-watch');
 
 var useTemplate = require('./build/gulp-use-template.js');
 var insertDb = require('./build/gulp-insert-into-db.js');
@@ -76,26 +77,25 @@ gulp.task('clean', function () {
 gulp.task('watch', function () {
   var watchglob = slash(SRC_PATH + '/**/*.md');
   console.log('Watching ' + watchglob);
-  return gulp.watch(watchglob, function (event) {
-    // Convert event.path to a form similar to that provided by gulp.src
-    var filePathFromSrc = path.relative(path.resolve(SRC_PATH), event.path);
+  return watch(watchglob, { base: SRC_PATH }, function (file) {
+    var event = file.event;
     // Normalize to unix-like/url-like relative path without extension
-    var normalizedFilePath = slash(filePathFromSrc).replace(/.md$/, '');
+    var normalizedFilePath = slash(file.relative).replace(/.md$/, '');
     var destFilePath = path.join(DIST_PATH, normalizedFilePath + '.html');
 
-    console.log(event.type + ' triggered');
+    console.log(event + ' triggered');
 
-    if (event.type === 'deleted' || event.type === 'changed') {
+    if (event === 'unlink' || event === 'change') {
       console.log('Removing db entry with ' + normalizedFilePath);
       console.log('Deleting file at ' + destFilePath);
       db.Delete(normalizedFilePath);
       del.sync(destFilePath);
     }
-    if (event.type === 'added' || event.type === 'changed') {
-      console.log('Building from source file ' + event.path);
+    if (event === 'add' || event === 'change') {
+      console.log('Building from source file ' + file.path);
       console.log('Inserting db entry with ' + normalizedFilePath);
 
-      gulp.src(event.path, { base: SRC_PATH })
+      gulp.src(file.path, { base: SRC_PATH })
         .pipe(frontMatter({
           property: 'data',
           remove: true
