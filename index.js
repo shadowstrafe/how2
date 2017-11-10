@@ -63,9 +63,8 @@ if (program.build || program.watch) {
   }
 
   var choices = rows.map(function (row) {
-    var howtoUrl = new url.URL(config.server.baseurl + row.path + '.html');
     return {
-      value: howtoUrl.toString(),
+      value: row.path,
       name: row.category + ' | ' + row.title
     };
   });
@@ -80,7 +79,8 @@ if (program.build || program.watch) {
   }];
 
   inquirer.prompt(questions).then(function (answers) {
-    server.start();
-    open(answers.howto);
+    // server.start();
+    var howtoUrl = new url.URL(config.server.baseurl + answers.howto + '.html');
+    open(howtoUrl.toString());
   });
 }
