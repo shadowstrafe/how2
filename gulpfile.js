@@ -10,6 +10,7 @@ var escape = require('markdown-it')().utils.escapeHtml;
 var path = require('path');
 var slash = require('slash');
 var watch = require('gulp-watch');
+var moment = require('moment');
 
 var useTemplate = require('./build/gulp-use-template.js');
 var insertDb = require('./build/gulp-insert-into-db.js');
@@ -87,14 +88,14 @@ gulp.task('watch', function () {
     var normalizedFilePath = slash(file.relative).replace(/.md$/, '');
     var destFilePath = path.join(DIST_PATH, normalizedFilePath + '.html');
 
-    var now = new Date().toTimeString();
+    var now = '[' + moment().format('HH:mm:ss') + ']';
     if (event === 'unlink' || event === 'change') {
-      console.log(now + ':Deleting file at ' + destFilePath);
+      console.log(now + ':Deleting file ' + destFilePath);
       db.Delete(normalizedFilePath);
       del.sync(destFilePath);
     }
     if (event === 'add' || event === 'change') {
-      console.log(now + ':Building from source file ' + file.path);
+      console.log(now + ':Building file ' + file.path);
 
       gulp.src(file.path, { base: SRC_PATH })
         .pipe(frontMatter({
