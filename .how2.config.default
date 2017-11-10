@@ -2,4 +2,5 @@
 sourcepath=D:\LeeChengkai\Dropbox\How2
 distpath=D:\LeeChengkai\How2
 [server]
+launch=false
 port=5500
