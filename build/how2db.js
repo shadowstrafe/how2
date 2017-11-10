@@ -21,6 +21,10 @@ module.exports = {
       .remove(function (howto) { return howto.path === path; })
       .write();
   },
+  Clear: function () {
+    db.set('howtos', [])
+      .write();
+  },
   Get: function (category, tags) {
     return db.get('howtos')
       .filter(function (howto) {

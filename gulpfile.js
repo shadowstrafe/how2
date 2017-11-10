@@ -75,7 +75,8 @@ gulp.task('assets', ['clean'], function () {
 });
 
 gulp.task('clean', function () {
-  return del(DIST_PATH + '/**/*');
+  db.Clear();
+  // return del.sync(DIST_PATH + '/**/*');
 });
 
 gulp.task('watch', function () {

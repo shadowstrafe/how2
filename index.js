@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var program = require('commander');
 var inquirer = require('inquirer');
+var open = require('opn');
 
 var db = require('./build/how2db.js');
 
@@ -33,7 +34,7 @@ if (rows.length === 0) {
 
 var choices = rows.map(function (row) {
   return {
-    value: 'localhost:5500/' + row.path + '.html',
+    value: 'http://localhost:5500/' + row.path + '.html',
     name: row.category + ' | ' + row.title
   };
 });
@@ -48,5 +49,5 @@ var questions = [{
 }];
 
 inquirer.prompt(questions).then(function (answers) {
-  console.log(answers);
+  open(answers.howto);
 });

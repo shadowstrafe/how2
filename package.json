@@ -29,6 +29,7 @@
     "inquirer": "^3.3.0",
     "lowdb": "^1.0.0",
     "markdown-it": "^8.4.0",
+    "opn": "^5.1.0",
     "slash": "^1.0.0"
   },
   "devDependencies": {
