@@ -2,6 +2,13 @@
 
 This project is a fork of how2 that instead uses markdown-it, nodejs and gulp instead of pandoc and python for speed improvements, better control over the output, and better integration with vscode.
 
+# Install
+
+While in this directory
+``` shell
+$> npm install -g
+```
+
 # Usage
 
 ## Building

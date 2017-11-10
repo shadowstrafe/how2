@@ -17,7 +17,7 @@ var config = require('./build/config.js');
 var db = require('./build/how2db');
 
 const SRC_PATH = config.paths.sourcepath;
-const DIST_PATH = './dist';
+const DIST_PATH = config.paths.distpath;
 
 const mdConfig = {
   options: {

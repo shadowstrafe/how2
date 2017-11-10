@@ -3,7 +3,9 @@ var low = require('lowdb');
 var FileSync = require('lowdb/adapters/FileSync');
 var path = require('path');
 
-const DB_PATH = path.join(__dirname, '../dist/how2db.json');
+var config = require('./config.js');
+
+const DB_PATH = path.resolve(config.paths.distpath, 'how2db.json');
 
 var db = low(new FileSync(DB_PATH));
 db.defaults({
@@ -22,8 +24,10 @@ module.exports = {
       .write();
   },
   Clear: function () {
-    db.set('howtos', [])
-      .write();
+    try {
+      db.set('howtos', [])
+        .write();
+    } catch (__) { }
   },
   Get: function (category, tags) {
     return db.get('howtos')

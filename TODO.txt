@@ -1,8 +1,2 @@
-1) Make it installable as a global shell command
-  
-  $> npm install -g
-
-2) Launch web server? 
-3) Consider switching to gulp4 alpha
-4) Make building files (and watching) a command line option (will require gulp-runner)
-5) Figure out a system for index.html page?
+1) Launch web server? 
+2) Figure out a system for index.html page?
