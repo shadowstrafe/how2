@@ -2,5 +2,4 @@
 sourcepath=D:\LeeChengkai\Dropbox\How2
 distpath=D:\LeeChengkai\How2
 [server]
-baseurl=http://localhost:5500/
 port=5500

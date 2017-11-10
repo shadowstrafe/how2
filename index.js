@@ -79,8 +79,9 @@ if (program.build || program.watch) {
   }];
 
   inquirer.prompt(questions).then(function (answers) {
-    // server.start();
-    var howtoUrl = new url.URL(config.server.baseurl + answers.howto + '.html');
+    server.start();
+    var howtoUrl = new url.URL('http://localhost/' + answers.howto + '.html');
+    howtoUrl.port = config.server.port;
     open(howtoUrl.toString());
   });
 }
