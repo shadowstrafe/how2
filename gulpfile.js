@@ -41,8 +41,8 @@ const mdConfig = {
   }
 };
 
-const template = fs.readFileSync(SRC_PATH + '/how2.template');
-var compiled = handlebars.compile(template.toString());
+const template = fs.readFileSync(SRC_PATH + '/how2.template', 'utf8');
+var compiled = handlebars.compile(template);
 
 gulp.task('default', ['build', 'assets']);
 
@@ -70,7 +70,7 @@ gulp.task('build', ['clean'], function () {
 });
 
 gulp.task('assets', ['clean'], function () {
-  return gulp.src(slash(SRC_PATH) + '/*.css')
+  return gulp.src(slash(SRC_PATH) + '/*.@(css|ico)')
     .pipe(gulp.dest(DIST_PATH));
 });
 
