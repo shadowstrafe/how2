@@ -8,8 +8,9 @@ var url = require('url');
 var GulpRunner = require('gulp-runner');
 var gulp = new GulpRunner(path.resolve(__dirname, 'gulpfile.js'));
 
+var config = require('./config.js');
 var db = require('./build/how2db.js');
-var config = require('./build/config.js');
+var server = require('./server/server.js');
 
 program.version('0.0.1')
   .description('A tool for searching local documentation written in markdown.')
@@ -19,6 +20,7 @@ program.version('0.0.1')
   .parse(process.argv);
 
 if (program.build || program.watch) {
+  server.stop();
   gulp.on('log', function (data) {
     process.stdout.write(data);
   });
@@ -71,6 +73,7 @@ if (program.build || program.watch) {
   }];
 
   inquirer.prompt(questions).then(function (answers) {
+    server.start();
     open(answers.howto);
   });
 }

@@ -13,7 +13,7 @@ var watch = require('gulp-watch');
 
 var useTemplate = require('./build/gulp-use-template.js');
 var insertDb = require('./build/gulp-insert-into-db.js');
-var config = require('./build/config.js');
+var config = require('./config.js');
 var db = require('./build/how2db');
 
 const SRC_PATH = config.paths.sourcepath;

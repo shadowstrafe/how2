@@ -3,7 +3,7 @@ var low = require('lowdb');
 var FileSync = require('lowdb/adapters/FileSync');
 var path = require('path');
 
-var config = require('./config.js');
+var config = require('../config.js');
 
 const DB_PATH = path.resolve(config.paths.distpath, 'how2db.json');
 
