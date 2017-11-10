@@ -1,4 +1,1 @@
-1) Launch web server? 
-2) Figure out a system for index.html page?
-3) Consider writing build and watch without gulp
--> Lots of problems using gulp this way, it was not meant to be used like this.
+1) Consider writing build and watch without gulp. Gulp was not meant to be used like this.
