@@ -1,9 +1,8 @@
 #!/usr/bin/env node
+var program = require('commander');
+var inquirer = require('inquirer');
 
 var db = require('./build/how2db.js');
-var config = require('./build/config.js');
-
-var program = require('commander');
 
 program.version('0.0.1')
   .option('-c, --category <CATEGORY>', 'Limit the search to the provided CATEGORY')
@@ -25,6 +24,29 @@ if (category) {
 }
 
 var rows = db.Get(category, tags);
-console.log(rows);
 
-console.log(config);
+if (rows.length === 0) {
+  console.log('No howtos found.');
+  console.log('Try relaxing your search conditions.');
+  process.exit();
+}
+
+var choices = rows.map(function (row) {
+  return {
+    value: 'localhost:5500/' + row.path + '.html',
+    name: row.category + ' | ' + row.title
+  };
+});
+
+var questions = [{
+  type: 'list',
+  name: 'howto',
+  message: `${rows.length} howtos found.`,
+  default: 0,
+  choices: choices,
+  pageSize: 10
+}];
+
+inquirer.prompt(questions).then(function (answers) {
+  console.log(answers);
+});

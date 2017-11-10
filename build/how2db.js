@@ -35,6 +35,21 @@ module.exports = {
         }
 
         return pass;
-      }).value();
+      }).value()
+      .sort(function (a, b) {
+        if (a.category === b.category) {
+          if (a.title < b.title) {
+            return -1;
+          } else if (a.title > b.title) {
+            return 1;
+          } else {
+            return 0;
+          }
+        } else if (a.category < b.category) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
   }
 };
