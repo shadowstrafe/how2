@@ -1,7 +1,7 @@
 {
   "name": "how2",
-  "version": "0.0.1",
-  "description": "A tool for searching local documentation written in markdown",
+  "version": "0.1.0",
+  "description": "A tool for searching local documentation written in markdown.",
   "main": "index.js",
   "bin": {
     "how2": "./index.js"
@@ -33,6 +33,7 @@
     "markdown-it": "^8.4.0",
     "moment": "^2.19.1",
     "opn": "^5.1.0",
+    "pkginfo": "^0.4.1",
     "serve-index": "^1.9.1",
     "slash": "^1.0.0"
   },

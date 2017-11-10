@@ -4,6 +4,7 @@ var open = require('opn');
 var path = require('path');
 var program = require('commander');
 var url = require('url');
+require('pkginfo')(module);
 
 var GulpRunner = require('gulp-runner');
 var gulp = new GulpRunner(path.resolve(__dirname, 'gulpfile.js'));
@@ -12,8 +13,9 @@ var config = require('./config.js');
 var db = require('./build/how2db.js');
 var server = require('./server/server.js');
 
-program.version('0.0.1')
-  .description('A tool for searching local documentation written in markdown.')
+program.name('how2')
+  .version(module.exports.version)
+  .description(module.exports.description)
   .option('-l, --list', 'list categories')
   .option('-c, --category <CATEGORY>', 'limit the search to the provided CATEGORY')
   .option('-b, --build', 'force a rebuild of the documentation folder')
