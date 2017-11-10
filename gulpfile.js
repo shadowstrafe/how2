@@ -46,7 +46,6 @@ var compiled = handlebars.compile(template.toString());
 gulp.task('default', ['build', 'assets']);
 
 gulp.task('build', ['clean'], function () {
-  // Rebuild
   return gulp.src(slash(SRC_PATH) + '/**/*.md')
     .pipe(frontMatter({
       property: 'data',
@@ -76,7 +75,7 @@ gulp.task('assets', ['clean'], function () {
 
 gulp.task('clean', function () {
   db.Clear();
-  // return del.sync(DIST_PATH + '/**/*');
+  return del.sync(DIST_PATH + '/**/*');
 });
 
 gulp.task('watch', function () {
