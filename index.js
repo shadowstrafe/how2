@@ -8,8 +8,16 @@ var db = require('./build/how2db.js');
 var config = require('./build/config.js');
 
 program.version('0.0.1')
-  .option('-c, --category <CATEGORY>', 'Limit the search to the provided CATEGORY')
+  .description('A tool for searching local documentation written in markdown.')
+  .option('-c, --category <CATEGORY>', 'limit the search to the provided CATEGORY')
+  .option('-b, --build', 'force a rebuild of the documentation folder')
+  .option('-w, --watch', 'watch source folder for changes and update documentation when they do')
   .parse(process.argv);
+
+if (program.build || program.watch) {
+  console.log('Building...');
+  process.exit();
+}
 
 var tags = program.args;
 var category = program.category;
