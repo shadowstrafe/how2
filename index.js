@@ -14,6 +14,7 @@ var server = require('./server/server.js');
 
 program.version('0.0.1')
   .description('A tool for searching local documentation written in markdown.')
+  .option('-l, --list', 'list categories')
   .option('-c, --category <CATEGORY>', 'limit the search to the provided CATEGORY')
   .option('-b, --build', 'force a rebuild of the documentation folder')
   .option('-w, --watch', 'watch source folder for changes and update documentation when they do')
@@ -31,6 +32,12 @@ if (program.build || program.watch) {
 
   var task = program.build ? 'default' : 'watch';
   gulp.run(task);
+} else if (program.list) {
+  let categories = db.GetCategories();
+  categories.forEach(cat => {
+    console.log(cat);
+  });
+  process.exit();
 } else {
   var tags = program.args;
   var category = program.category;
@@ -47,7 +54,7 @@ if (program.build || program.watch) {
     console.log(`Searching within the category '${category}'.`);
   }
 
-  var rows = db.Get(category, tags);
+  let rows = db.Get(category, tags);
 
   if (rows.length === 0) {
     console.log('No howtos found.');

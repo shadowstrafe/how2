@@ -59,5 +59,12 @@ module.exports = {
           return 1;
         }
       });
+  },
+  GetCategories: function () {
+    return db.get('howtos')
+      .map(function (howto) { return howto.category; })
+      .uniq()
+      .sort()
+      .value();
   }
 };
