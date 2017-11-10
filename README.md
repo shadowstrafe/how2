@@ -45,8 +45,11 @@ This should be an absolute path to the location where all markdown files are kep
 This is currently unused. There are issues with how the current gulp clean task refuses to delete files outside of the working directory of gulp. No impact to currently how it works though.
 
 ## Server
-### Port
+### port
 The port number to be used to serve content. If not found defaults to 5500.
+
+### launch
+If true, server is automatically launched if not running on selection of howto.
 
 # Content structure
 ## Template

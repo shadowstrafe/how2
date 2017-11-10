@@ -18,6 +18,7 @@ program.version('0.0.1')
   .option('-c, --category <CATEGORY>', 'limit the search to the provided CATEGORY')
   .option('-b, --build', 'force a rebuild of the documentation folder')
   .option('-w, --watch', 'watch source folder for changes and update documentation when they do')
+  .option('-s, --server', 'launch the documentation server')
   .parse(process.argv);
 
 if (program.build || program.watch) {
@@ -38,6 +39,8 @@ if (program.build || program.watch) {
     console.log(cat);
   });
   process.exit();
+} else if (program.server) {
+  server.start();
 } else {
   var tags = program.args;
   var category = program.category;
