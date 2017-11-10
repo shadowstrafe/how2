@@ -2,8 +2,7 @@
   
   $> npm install -g
 
-2) Allow user to navigate and select a howto
-3) Launch web server? and open url on selection
-4) Consider switching to gulp4 alpha
-5) Make building files (and watching) a command line option (will require gulp-runner)
-6) Figure out a system for index.html page?
+2) Launch web server? 
+3) Consider switching to gulp4 alpha
+4) Make building files (and watching) a command line option (will require gulp-runner)
+5) Figure out a system for index.html page?
