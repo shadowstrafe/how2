@@ -1,8 +1,12 @@
 #!/usr/bin/env node
-var program = require('commander');
 var inquirer = require('inquirer');
 var open = require('opn');
+var path = require('path');
+var program = require('commander');
 var url = require('url');
+
+var GulpRunner = require('gulp-runner');
+var gulp = new GulpRunner(path.resolve(__dirname, 'gulpfile.js'));
 
 var db = require('./build/how2db.js');
 var config = require('./build/config.js');
@@ -16,6 +20,14 @@ program.version('0.0.1')
 
 if (program.build || program.watch) {
   console.log('Building...');
+  gulp.run('build', function (err) {
+    throw new Error(err);
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Build successful');
+    }
+  });
   process.exit();
 }
 
