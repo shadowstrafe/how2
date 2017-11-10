@@ -1,11 +1,15 @@
-// var sqlite = require('sqlite3').verbose();
 var low = require('lowdb');
 var FileSync = require('lowdb/adapters/FileSync');
 var path = require('path');
+var fs = require('fs');
 
 var config = require('../config.js');
 
-const DB_PATH = path.resolve(config.paths.distpath, 'how2db.json');
+const DB_PATH = path.join(config.paths.distpath, 'how2db.json');
+
+if (!fs.existsSync(DB_PATH)) {
+  fs.mkdirSync(config.paths.distpath);
+}
 
 var db = low(new FileSync(DB_PATH));
 db.defaults({
