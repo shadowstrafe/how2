@@ -2,8 +2,10 @@
 var program = require('commander');
 var inquirer = require('inquirer');
 var open = require('opn');
+var url = require('url');
 
 var db = require('./build/how2db.js');
+var config = require('./build/config.js');
 
 program.version('0.0.1')
   .option('-c, --category <CATEGORY>', 'Limit the search to the provided CATEGORY')
@@ -33,8 +35,9 @@ if (rows.length === 0) {
 }
 
 var choices = rows.map(function (row) {
+  var howtoUrl = new url.URL(config.server.baseurl + row.path + '.html');
   return {
-    value: 'http://localhost:5500/' + row.path + '.html',
+    value: howtoUrl.toString(),
     name: row.category + ' | ' + row.title
   };
 });
