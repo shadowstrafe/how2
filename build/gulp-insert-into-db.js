@@ -7,7 +7,7 @@ module.exports = function () {
     db.Insert({
       category: data.category,
       title: data.title,
-      tags: data.tags,
+      tags: data.tags || [],
       path: data.relativepath
     });
     callback(null, file);
