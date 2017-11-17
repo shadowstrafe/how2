@@ -7,7 +7,6 @@ var url = require('url');
 require('pkginfo')(module);
 
 var GulpRunner = require('gulp-runner');
-var gulp = new GulpRunner(path.resolve(__dirname, 'gulpfile.js'));
 
 var config = require('./config.js');
 var db = require('./build/how2db.js');
@@ -25,6 +24,7 @@ program.name('how2')
 
 if (program.build || program.watch) {
   server.stop();
+  var gulp = new GulpRunner(path.resolve(__dirname, 'gulpfile.js'));
   gulp.on('log', function (data) {
     process.stdout.write(data);
   });
@@ -33,8 +33,14 @@ if (program.build || program.watch) {
     process.stderr.write(err);
   });
 
-  var task = program.build ? 'default' : 'watch';
-  gulp.run(task);
+  var tasks = [];
+  if (program.build) {
+    tasks.push('default');
+  }
+  if (program.watch) {
+    tasks.push('watch');
+  }
+  gulp.run(tasks);
 } else if (program.list) {
   let categories = db.GetCategories();
   categories.forEach(cat => {
