@@ -19,6 +19,7 @@ var db = require('./build/how2db');
 
 const SRC_PATH = config.paths.sourcepath;
 const DIST_PATH = config.paths.distpath;
+const TEMPLATE_PATH = config.paths.templatepath;
 
 const mdConfig = {
   options: {
@@ -42,7 +43,7 @@ const mdConfig = {
 };
 
 function getTemplate () {
-  const template = fs.readFileSync(SRC_PATH + '/how2.template', 'utf8');
+  const template = fs.readFileSync(TEMPLATE_PATH, 'utf8');
   return handlebars.compile(template);
 }
 
