@@ -7,7 +7,7 @@ var config = require('../config.js');
 
 const DB_PATH = path.join(config.paths.distpath, 'how2db.json');
 
-if (!fs.existsSync(DB_PATH)) {
+if (!fs.existsSync(config.paths.distpath)) {
   fs.mkdirSync(config.paths.distpath);
 }
 

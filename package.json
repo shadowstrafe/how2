@@ -1,6 +1,6 @@
 {
   "name": "how2",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A tool for searching local documentation written in markdown.",
   "main": "index.js",
   "bin": {
