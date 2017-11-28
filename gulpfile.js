@@ -41,12 +41,15 @@ const mdConfig = {
   }
 };
 
-const template = fs.readFileSync(SRC_PATH + '/how2.template', 'utf8');
-var compiled = handlebars.compile(template);
+function getTemplate () {
+  const template = fs.readFileSync(SRC_PATH + '/how2.template', 'utf8');
+  return handlebars.compile(template);
+}
 
-gulp.task('default', ['build', 'assets']);
+gulp.task('build', ['build:md', 'build:assets']);
 
-gulp.task('build', ['clean'], function () {
+gulp.task('build:md', ['clean'], function () {
+  var template = getTemplate();
   return gulp.src(slash(SRC_PATH) + '/**/*.md')
     .pipe(frontMatter({
       property: 'data',
@@ -64,12 +67,12 @@ gulp.task('build', ['clean'], function () {
       };
     }))
     .pipe(markdown(mdConfig))
-    .pipe(useTemplate(compiled))
+    .pipe(useTemplate(template))
     .pipe(insertDb())
     .pipe(gulp.dest(DIST_PATH));
 });
 
-gulp.task('assets', ['clean'], function () {
+gulp.task('build:assets', ['clean'], function () {
   return gulp.src(slash(SRC_PATH) + '/*.@(css|ico)')
     .pipe(gulp.dest(DIST_PATH));
 });
@@ -79,7 +82,7 @@ gulp.task('clean', function () {
   return del.sync(DIST_PATH + '/**/*');
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', ['build'], function () {
   var watchglob = slash(SRC_PATH) + '/**/*.md';
   console.log('Watching ' + watchglob);
   return watch(watchglob, function (file) {
@@ -97,6 +100,7 @@ gulp.task('watch', function () {
     if (event === 'add' || event === 'change') {
       console.log(now + ':Building file ' + file.path);
 
+      var template = getTemplate();
       gulp.src(file.path, { base: SRC_PATH })
         .pipe(frontMatter({
           property: 'data',
@@ -112,7 +116,7 @@ gulp.task('watch', function () {
           };
         }))
         .pipe(markdown(mdConfig))
-        .pipe(useTemplate(compiled))
+        .pipe(useTemplate(template))
         .pipe(insertDb())
         .pipe(gulp.dest(DIST_PATH));
     }

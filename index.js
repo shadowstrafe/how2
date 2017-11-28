@@ -33,14 +33,11 @@ if (program.build || program.watch) {
     process.stderr.write(err);
   });
 
-  var tasks = [];
-  if (program.build) {
-    tasks.push('default');
-  }
   if (program.watch) {
-    tasks.push('watch');
+    gulp.run('watch');
+  } else if (program.build) {
+    gulp.run('build');
   }
-  gulp.run(tasks);
 } else if (program.list) {
   let categories = db.GetCategories();
   categories.forEach(cat => {
