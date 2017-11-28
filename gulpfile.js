@@ -60,10 +60,17 @@ gulp.task('build:md', ['clean'], function () {
       let normalizedFilePath = slash(file.relative).replace(/.md$/, '');
       let normalizedFilePathSegments = normalizedFilePath.split('/');
       let n = normalizedFilePathSegments.length;
+
+      var date = null;
+      if (file.data.date) {
+        date = moment(file.data.date).format('Do MMMM YYYY');
+      }
+
       return {
         rootdir: '../'.repeat(n - 1),
         relativepath: normalizedFilePath,
-        category: normalizedFilePathSegments.slice(0, -1).join('/')
+        category: normalizedFilePathSegments.slice(0, -1).join('/'),
+        date: date
       };
     }))
     .pipe(markdown(mdConfig))
@@ -109,10 +116,16 @@ gulp.task('watch', ['build'], function () {
         .pipe(data(function (file) {
           let normalizedFilePathSegments = normalizedFilePath.split('/');
           let n = normalizedFilePathSegments.length;
+          var date = null;
+          if (file.data.date) {
+            date = moment(file.data.date).format('Do MMMM YYYY');
+          }
+
           return {
             rootdir: '../'.repeat(n - 1),
             relativepath: normalizedFilePath,
-            category: normalizedFilePathSegments.slice(0, -1).join('/')
+            category: normalizedFilePathSegments.slice(0, -1).join('/'),
+            date: date
           };
         }))
         .pipe(markdown(mdConfig))
