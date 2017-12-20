@@ -24,8 +24,8 @@ const TEMPLATE_PATH = config.paths.templatepath;
 const mdConfig = {
   options: {
     html: true,
-    linkify: true,
-    typographer: true,
+    linkify: false,
+    typographer: false,
     highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try {
