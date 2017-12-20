@@ -87,7 +87,9 @@ gulp.task('build:assets', ['clean'], function () {
 
 gulp.task('clean', function () {
   db.Clear();
-  return del.sync(DIST_PATH + '/**/*');
+  return del(DIST_PATH + '/**/*').catch((err) => {
+    console.error(err);
+  });
 });
 
 gulp.task('watch', ['build'], function () {
@@ -103,7 +105,11 @@ gulp.task('watch', ['build'], function () {
     if (event === 'unlink' || event === 'change') {
       console.log(now + ':Deleting file ' + destFilePath);
       db.Delete(normalizedFilePath);
-      del.sync(destFilePath);
+      try {
+        del.sync(destFilePath);
+      } catch (err) {
+        console.error(err);
+      }
     }
     if (event === 'add' || event === 'change') {
       console.log(now + ':Building file ' + file.path);
