@@ -54,11 +54,25 @@ The path of the handlebars template to use to generate the resulting HTML. If no
 
 #### launch
 
-If true, an express server is automatically launched if not running on selection of howto.
+If true, an express server is automatically launched if not running on selection of howto that serves the content.
 
 #### port
 
 The port number to be used to serve content. If not found defaults to 5500.
+
+### Build
+
+#### manifestdir
+
+Location of the manifest file.
+
+#### buildhtml
+
+If true, HTML files are built along with the manifest file to the output path.
+
+#### outputpath
+
+The location of the HTML files when buildhtml is set to true. As this directory is cleaned on build, be careful not to provide a path that may damage the system.
 
 ## Content structure
 

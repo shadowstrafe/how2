@@ -10,7 +10,7 @@ config.source.templatepath = config.source.templatepath || path.join(config.sour
 config.server.port = config.server.port || '5500';
 
 // Temporarily use a hardcoded dist path for now
-config.build.outputpath = path.resolve(__dirname, './dist');
-config.build.manifestdir - config.build.manifestdir || path.resolve(__dirname, './dist');
+config.build.outputpath = config.build.outputpath || path.resolve(__dirname, './dist');
+config.build.manifestdir = config.build.manifestdir || path.resolve(__dirname, './dist');
 
 module.exports = config;

@@ -1,5 +1,5 @@
 var data = require('gulp-data');
-var del = require('del');
+var del = require('rimraf');
 var frontMatter = require('gulp-front-matter');
 var fs = require('fs');
 var gulp = require('gulp');
@@ -93,7 +93,7 @@ gulp.task('build:assets', ['clean'], function () {
 
 gulp.task('clean', function () {
   db.Clear();
-  return del(DIST_PATH + '/**/*').catch((err) => {
+  return del(DIST_PATH + '/**/*', (err) => {
     console.error(err);
   });
 });
