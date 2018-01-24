@@ -68,7 +68,7 @@ Location of the manifest file.
 
 #### buildhtml
 
-If true, HTML files are built along with the manifest file to the output path.
+If true, HTML files are built along with the manifest file to the output path. These files will be served by the express server if configured.
 
 #### outputpath
 
