@@ -17,9 +17,11 @@ var insertDb = require('./build/gulp-insert-into-db.js');
 var config = require('./config.js');
 var db = require('./build/how2db');
 
-const SRC_PATH = config.paths.sourcepath;
-const DIST_PATH = config.paths.distpath;
-const TEMPLATE_PATH = config.paths.templatepath;
+const SRC_PATH = config.source.sourcepath;
+const TEMPLATE_PATH = config.source.templatepath;
+const DIST_PATH = config.build.outputpath;
+
+const shouldBuildHtml = config.build.buildhtml;
 
 const mdConfig = {
   options: {
@@ -51,6 +53,8 @@ gulp.task('build', ['build:md', 'build:assets']);
 
 gulp.task('build:md', ['clean'], function () {
   var template = getTemplate();
+  var output = shouldBuildHtml ? gulp.dest(DIST_PATH) : () => {};
+
   return gulp.src(slash(SRC_PATH) + '/**/*.md')
     .pipe(frontMatter({
       property: 'data',
@@ -77,12 +81,14 @@ gulp.task('build:md', ['clean'], function () {
     .pipe(markdown(mdConfig))
     .pipe(useTemplate(template))
     .pipe(insertDb())
-    .pipe(gulp.dest(DIST_PATH));
+    .pipe(output);
 });
 
 gulp.task('build:assets', ['clean'], function () {
-  return gulp.src(slash(SRC_PATH) + '/*.@(css|ico)')
-    .pipe(gulp.dest(DIST_PATH));
+  if (shouldBuildHtml) {
+    return gulp.src(slash(SRC_PATH) + '/*.@(css|ico)')
+      .pipe(gulp.dest(DIST_PATH));
+  }
 });
 
 gulp.task('clean', function () {
@@ -93,6 +99,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('watch', ['build'], function () {
+  var output = shouldBuildHtml ? gulp.dest(DIST_PATH) : () => {};
   var watchglob = slash(SRC_PATH) + '/**/*.md';
   console.log('Watching ' + watchglob);
   return watch(watchglob, function (file) {
@@ -138,7 +145,7 @@ gulp.task('watch', ['build'], function () {
         .pipe(markdown(mdConfig))
         .pipe(useTemplate(template))
         .pipe(insertDb())
-        .pipe(gulp.dest(DIST_PATH));
+        .pipe(output);
     }
   });
 });

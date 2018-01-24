@@ -4,7 +4,7 @@ var serveIndex = require('serve-index');
 var config = require('../config');
 
 const PORT = config.server.port;
-const STATIC_ROOT = config.paths.distpath;
+const STATIC_ROOT = config.build.buildhtml ? config.build.outputpath : config.source.sourcepath;
 
 var app = express();
 
@@ -22,11 +22,6 @@ function start () {
   });
 }
 
-function stop () {
-
-}
-
 module.exports = {
-  start: start,
-  stop: stop
+  start: start
 };

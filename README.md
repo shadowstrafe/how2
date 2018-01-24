@@ -4,29 +4,31 @@ how2 is a tool for building, searching and serving local documentation that was 
 
 This project is a fork of how2 that instead uses markdown-it, nodejs and gulp instead of pandoc and python for speed improvements and better control over the output.
 
-# Installation
+## Installation
 
 While in this directory
+
 ``` shell
 $> npm install -g
 ```
 
-# Usage
+## Usage
 
-## Building
+### Building Files
 
 ``` shell
 $> how2 --build
 ```
 
-## Watching
+## Watching Files
+
 While watching is active, when markdown files in source folder change they will be rebuilt.
 
 ``` shell
 $> how2 --watch
 ```
 
-## Search for related how-tos
+### Search For Related how-tos
 
 ``` shell
 $> how2 -c category tag1 tag2
@@ -34,26 +36,36 @@ $> how2 -c category tag1 tag2
 
 Interact with the inquirer command prompt.
 
-# Configuration
+## Configuration
+
 .how2.config configuration files are read from the user's home directory. It is an ini-like file with key value pairs.
 
-## Paths
-### sourcepath 
+### Source
+
+#### sourcepath
+
 This should be an absolute path to the location where all markdown files are kept. Required.
 
-### distpath 
-This is currently unused. There are issues with how the current gulp clean task refuses to delete files outside of the working directory of gulp. No impact to currently how it works though.
+#### templatepath
 
-## Server
-### port
+The path of the handlebars template to use to generate the resulting HTML. If not provided defaults to **how2.template** at the root of the sourcepath
+
+### Server
+
+#### launch
+
+If true, an express server is automatically launched if not running on selection of howto.
+
+#### port
+
 The port number to be used to serve content. If not found defaults to 5500.
 
-### launch
-If true, server is automatically launched if not running on selection of howto.
+## Content structure
 
-# Content structure
-## Template
+### Template
+
 how2.template is a handlebars template used to generate the resulting html files.
 
-## CSS
+### CSS
+
 css files at root of sourcepath are copied over to the dist path.

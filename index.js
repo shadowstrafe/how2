@@ -23,7 +23,6 @@ program.name('how2')
   .parse(process.argv);
 
 if (program.build || program.watch) {
-  server.stop();
   var gulp = new GulpRunner(path.resolve(__dirname, 'gulpfile.js'));
   gulp.on('log', function (data) {
     process.stdout.write(data);
