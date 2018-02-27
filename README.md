@@ -64,11 +64,11 @@ The port number to be used to serve content. If not found defaults to 5500.
 
 #### manifestdir
 
-Location of the manifest file.
+Location of the manifest file (how2db.json).
 
 #### buildhtml
 
-If true, HTML files are built along with the manifest file to the output path. These files will be served by the express server if configured.
+If true, HTML files are generated and placed at the output path when the manifest file is built. These files will be served by the express server if configured.
 
 #### outputpath
 
