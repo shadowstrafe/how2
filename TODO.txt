@@ -5,3 +5,4 @@
     File indexing / watching still has to be handled though.
     Also in this way we can wean ourselves off gulp.
 3) Consider integrating a text search engine like elasticsearch. (This would be insane! Insanely cool!)
+4) Add tex support for mathematical content.
