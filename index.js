@@ -93,7 +93,6 @@ if (program.build || program.watch) {
       open(howtoUrl.toString());
     } else {
       open(howtoUrl.toString());
-      process.exit();
     }
   });
 }
