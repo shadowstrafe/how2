@@ -35,11 +35,14 @@ let md = new MarkdownIt({
   blockOpen: '$$',
   blockClose: '$$',
   inlineRenderer: function (str) {
-    return katex.renderToString(str);
+    return katex.renderToString(str, {
+      throwOnError: false
+    });
   },
   blockRenderer: function (str) {
     return katex.renderToString(str, {
-      displayMode: true
+      displayMode: true,
+      throwOnError: false
     });
   }
 });
