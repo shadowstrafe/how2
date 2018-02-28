@@ -219,6 +219,7 @@ function buildMarkdown (filePath) {
         path: relativePath
       });
       if (shouldBuildHtml) {
+        content.attributes.category = category;
         var html = htmlify(content);
         var outputDir = path.join(config.build.outputpath, category);
         mkdirp(outputDir, function (err) {
