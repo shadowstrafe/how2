@@ -18,13 +18,7 @@ let md = new MarkdownIt({
   linkify: false,
   typographer: false,
   highlight: function (str, lang) {
-    if (lang === 'math') {
-      try {
-        return '<pre class="hljs math"><code>' +
-          katex.renderToString(str) +
-          '</code></pre>';
-      } catch (_) { }
-    } else if (lang && hljs.getLanguage(lang)) {
+    if (lang && hljs.getLanguage(lang)) {
       try {
         return '<pre class="hljs"><code>' +
           hljs.highlight(lang, str, true).value +
@@ -34,6 +28,19 @@ let md = new MarkdownIt({
     return '<pre class="hljs"><code>' +
       escape(str) +
       '</code></pre>';
+  }
+}).use(require('markdown-it-math'), {
+  inlineOpen: '$',
+  inlineClose: '$',
+  blockOpen: '$$',
+  blockClose: '$$',
+  inlineRenderer: function (str) {
+    return katex.renderToString(str);
+  },
+  blockRenderer: function (str) {
+    return katex.renderToString(str, {
+      displayMode: true
+    });
   }
 });
 
