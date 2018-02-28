@@ -5,6 +5,7 @@ var fs = require('fs');
 var gulp = require('gulp');
 var handlebars = require('handlebars');
 var hljs = require('highlight.js');
+var katex = require('katex');
 var markdown = require('gulp-markdownit');
 var escape = require('markdown-it')().utils.escapeHtml;
 var path = require('path');
@@ -29,7 +30,13 @@ const mdConfig = {
     linkify: false,
     typographer: false,
     highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
+      if (lang === 'math') {
+        try {
+          return '<pre class="hljs math"><code>' +
+            katex.renderToString(str) +
+            '</code></pre>';
+        } catch (_) { }
+      } else if (lang && hljs.getLanguage(lang)) {
         try {
           return '<pre class="hljs"><code>' +
             hljs.highlight(lang, str, true).value +
@@ -49,7 +56,7 @@ function getTemplate () {
   return handlebars.compile(template);
 }
 
-gulp.task('build', ['build:md', 'build:assets']);
+gulp.task('build', ['build:md', 'build:assets', 'build:katex']);
 
 gulp.task('build:md', ['clean'], function () {
   var template = getTemplate();
@@ -86,8 +93,15 @@ gulp.task('build:md', ['clean'], function () {
 
 gulp.task('build:assets', ['clean'], function () {
   if (shouldBuildHtml) {
-    return gulp.src(slash(SRC_PATH) + '/*.@(css|ico)')
+    return gulp.src(slash(SRC_PATH) + '/*.@(css|js|ico)')
       .pipe(gulp.dest(DIST_PATH));
+  }
+});
+
+gulp.task('build:katex', ['clean'], function () {
+  if (shouldBuildHtml) {
+    return gulp.src(slash(SRC_PATH) + '/fonts/**/*')
+      .pipe(gulp.dest(DIST_PATH + '/fonts/'));
   }
 });
 
