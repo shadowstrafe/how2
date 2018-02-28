@@ -1,7 +1,10 @@
-[paths]
-sourcepath=D:\LeeChengkai\Dropbox\How2
-distpath=D:\LeeChengkai\How2
-templatepath=D:\LeeChengkai\Dropbox\How2\how2.template
+[source]
+sourcepath='D:\LeeChengkai\Dropbox\How2'
+templatepath='D:\LeeChengkai\Dropbox\How2\how2.template'
 [server]
 launch=false
 port=5500
+[build]
+manifestdir='C:\inetpub\wwwroot\how2\'
+buildhtml=true
+outputpath='C:\inetpub\wwwroot\how2\'

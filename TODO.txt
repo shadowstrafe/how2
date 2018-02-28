@@ -1,8 +1,4 @@
-1) Consider writing build and watch without gulp. Gulp was not meant to be used like this.
-2) Consider serving files directly without writing to a dist folder. 
+1) Consider serving files directly without writing to a dist folder. 
     On the fly building of files means less storage required, scales better.
     No need to depend on file deleting and syncing between db and dist folder.
-    File indexing / watching still has to be handled though.
-    Also in this way we can wean ourselves off gulp.
-3) Consider integrating a text search engine like elasticsearch. (This would be insane! Insanely cool!)
-4) Add tex support for mathematical content.
+2) Consider integrating a text search engine like elasticsearch. (This would be insane! Insanely cool!)
