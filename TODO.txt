@@ -2,3 +2,6 @@
     On the fly building of files means less storage required, scales better.
     No need to depend on file deleting and syncing between db and dist folder.
 2) Consider integrating a text search engine like elasticsearch. (This would be insane! Insanely cool!)
+3) Consider changing up the directory layout of the source files
+    Right now katex fonts directory takes up a root folder.
+4) Consider setting up a full rebuild when the template changes on watch
