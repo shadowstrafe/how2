@@ -83,3 +83,7 @@ how2.template is a handlebars template used to generate the resulting html files
 ### CSS
 
 css files at root of sourcepath are copied over to the dist path.
+
+### Markdown
+
+Uses markdown-it which is commonmark-compliant and uses "GFM Tables" by default. Also allows for maths latex inlined with a pair of $s or in a block between a pair of double $s
