@@ -156,7 +156,9 @@ function remove (filePath) {
   if (shouldBuildHtml) {
     var destFilePath = path.join(config.build.outputpath, relativePath + '.html');
     del(destFilePath, function (err) {
-      console.error(err);
+      if (err) {
+        console.error(err);
+      }
     });
   }
 }
