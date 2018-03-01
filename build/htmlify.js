@@ -35,15 +35,27 @@ let md = new MarkdownIt({
   blockOpen: '$$',
   blockClose: '$$',
   inlineRenderer: function (str) {
-    return katex.renderToString(str, {
-      throwOnError: false
-    });
+    try {
+      return katex.renderToString(str, {
+        throwOnError: false
+      });
+    } catch (err) {
+      console.error(err);
+      console.warn('Error parsing inline math, rendering as raw expression.');
+      return escape(str);
+    }
   },
   blockRenderer: function (str) {
-    return katex.renderToString(str, {
-      displayMode: true,
-      throwOnError: false
-    });
+    try {
+      return katex.renderToString(str, {
+        displayMode: true,
+        throwOnError: false
+      });
+    } catch (err) {
+      console.error(err);
+      console.warn('Error parsing block math, rendering as raw expression.');
+      return escape(str);
+    }
   }
 });
 
