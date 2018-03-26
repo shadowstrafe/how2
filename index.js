@@ -116,7 +116,7 @@ if (program.build) {
 }
 
 function build () {
-  glob('**/*.md', {
+  glob('how2/**/*.md', {
     cwd: slash(config.source.sourcepath)
   }, function (err, matches) {
     if (err) throw err;
@@ -206,7 +206,7 @@ function buildMarkdown (filePath) {
   const relativePath = slash(filePath).replace(/.md$/, '');
   const absPath = path.resolve(config.source.sourcepath, filePath);
   const pathSegments = relativePath.split('/');
-  const category = pathSegments.slice(0, -1).join('/');
+  const category = pathSegments.slice(1, -1).join('/');
   const fileName = pathSegments[pathSegments.length - 1];
   fs.readFile(absPath, 'utf8', function (err, data) {
     if (err) {
