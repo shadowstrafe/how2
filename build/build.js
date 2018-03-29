@@ -19,8 +19,11 @@ function buildAll () {
     if (err) throw err;
 
     if (shouldBuildHtml) {
+      // path.resolve removes trailing slashes
+      var cleanGlob = slash(path.resolve(config.build.outputpath)) + '/**/*';
+
       // Cleanup output directory
-      del(config.source.outputpath + '/**/*', (err) => {
+      del(cleanGlob, (err) => {
         if (err) {
           console.error(err);
         } else {
