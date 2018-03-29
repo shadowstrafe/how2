@@ -31,6 +31,7 @@
     "markdown-it-math": "^4.1.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.19.1",
+    "node-sass": "^4.8.3",
     "opn": "^5.1.0",
     "pkginfo": "^0.4.1",
     "rimraf": "^2.6.2",
