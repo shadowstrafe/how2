@@ -6,4 +6,3 @@
 4) Setup a way to normalize tag queries 
     eg. when searching for the plural version, normalize to singular.
 5) Asyncify / Promisify the build.
-6) Consider placing assets in this project instead of as part of source.
