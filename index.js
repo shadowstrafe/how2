@@ -95,7 +95,7 @@ if (program.build) {
   }];
 
   inquirer.prompt(questions).then(function (answers) {
-    var howtoUrl = new url.URL('http://localhost/' + answers.howto + '.html');
+    var howtoUrl = new url.URL('http://localhost/how2/' + answers.howto + '.html');
     howtoUrl.port = config.server.port;
     if (config.server.launch) {
       server.start();

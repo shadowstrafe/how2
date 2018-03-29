@@ -13,7 +13,7 @@ var htmlify = require('./htmlify.js');
 const shouldBuildHtml = config.build.buildhtml;
 
 function buildAll () {
-  glob('how2/**/*.md', {
+  glob('**/*.md', {
     cwd: slash(config.source.sourcepath)
   }, function (err, matches) {
     if (err) throw err;
@@ -42,12 +42,12 @@ function buildAll () {
 
 function copyAssets () {
   glob('*.@(css|ico)', {
-    cwd: slash(config.source.sourcepath)
+    cwd: slash(config.source.assetdirpath)
   }, function (err, files) {
     if (err) console.err(err);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const srcPath = path.resolve(config.source.sourcepath, file);
+      const srcPath = path.resolve(config.source.assetdirpath, file);
       const destPath = path.resolve(config.build.outputpath, file);
       fs.copyFile(srcPath, destPath, (err) => {
         if (err) console.error(err);
@@ -56,7 +56,7 @@ function copyAssets () {
   });
 
   glob('fonts/**/*', {
-    cwd: slash(config.source.sourcepath)
+    cwd: slash(config.source.assetdirpath)
   }, function (err, files) {
     if (err) {
       console.err(err);
@@ -67,7 +67,7 @@ function copyAssets () {
         } else {
           for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            const srcPath = path.resolve(config.source.sourcepath, file);
+            const srcPath = path.resolve(config.source.assetdirpath, file);
             const destPath = path.resolve(config.build.outputpath, file);
             fs.copyFile(srcPath, destPath, (err) => {
               if (err) console.error(err);
@@ -83,7 +83,7 @@ function buildMarkdown (filePath) {
   const relativePath = slash(filePath).replace(/.md$/, '');
   const absPath = path.resolve(config.source.sourcepath, filePath);
   const pathSegments = relativePath.split('/');
-  const category = pathSegments.slice(1, -1).join('/');
+  const category = pathSegments.slice(0, -1).join('/');
   const fileName = pathSegments[pathSegments.length - 1];
   fs.readFile(absPath, 'utf8', function (err, data) {
     if (err) {
