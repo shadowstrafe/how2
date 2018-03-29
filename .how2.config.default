@@ -1,6 +1,7 @@
 [source]
-sourcepath='D:\LeeChengkai\Dropbox\How2'
-templatepath='D:\LeeChengkai\Dropbox\How2\how2.template'
+sourcepath='D:\LeeChengkai\Dropbox\How2\'
+assetdirpath ='D:\LeeChengkai\Git\how2\assets\'
+templatepath='D:\LeeChengkai\Git\how2\assets\how2.handlebars'
 [server]
 launch=false
 port=5500
