@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/fonts.css" type="text/css" />
+    <link rel="stylesheet" href="/katex.min.css">
+    <link rel="stylesheet" href="/highlightjs.css">
+    <link rel="stylesheet" href="/how2.css" type="text/css" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div class="header">
+        <a href="./">
+            <h3 class="category">{{category}}</h3>
+        </a>
+        {{#if version}}
+            <h6 class="version">Version: {{version}}</h6>
+        {{/if}}
+        {{#if date}}
+            <h6 class="date">Date: {{date}}</h6>
+        {{/if}}
+        <h1 class="title">{{title}}</h1>
+    </div>
+    {{{content}}}
+    <p>
+        <a href="./">Back to Index</a>
+    </p>
+</body>
+
+</html>
