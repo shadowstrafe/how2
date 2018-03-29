@@ -17,10 +17,18 @@ $> npm install -g
 ### Building Files
 
 ``` shell
-$> how2 --build
+how2 --build
 ```
 
-## Watching Files
+### Compiling CSS
+
+In this directory,
+
+``` shell
+npm run compile
+```
+
+### Watching Files
 
 While watching is active, when markdown files in source folder change they will be rebuilt.
 
