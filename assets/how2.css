@@ -134,16 +134,6 @@ samp {
   font-family: Consolas, Inconsolata, 'Courier New', monospace;
   font-size: 0.98em;
   line-height: initial; }
-  .theme-light pre, .theme-light
-  code, .theme-light
-  kbd, .theme-light
-  samp {
-    color: #000000; }
-  .theme-dark pre, .theme-dark
-  code, .theme-dark
-  kbd, .theme-dark
-  samp {
-    color: #f0f0f0; }
 
 b,
 strong {

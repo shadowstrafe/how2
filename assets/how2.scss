@@ -137,9 +137,6 @@ samp {
     font-family: Consolas, Inconsolata, 'Courier New', monospace;
     font-size: 0.98em;
     line-height: initial;
-    @include themify($themes) {
-        color: themed('codeColor');
-    }
 }
 
 b,
