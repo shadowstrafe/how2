@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" class="theme-dark">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,11 +12,11 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
 
-<body class="dark-theme">
+<body class="theme-dark">
     <div class="header">
-        <a href="./">
-            <h3 class="category">{{category}}</h3>
-        </a>
+        <h3 class="category">
+            <a href="./">{{category}}</a>
+        </h3>
         {{#if version}}
         <h6 class="version">Version: {{version}}</h6>
         {{/if}} {{#if date}}
@@ -24,7 +24,6 @@
         {{/if}}
         <h1 class="title">{{title}}</h1>
     </div>
-
     {{{content}}}
     <p>
         <a href="./">Back to Index</a>
