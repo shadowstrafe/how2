@@ -44,7 +44,7 @@ function buildAll () {
 }
 
 function copyAssets () {
-  glob('*.@(css|ico)', {
+  glob('*.@(css|ico|css.map)', {
     cwd: slash(config.source.assetdirpath)
   }, function (err, files) {
     if (err) console.err(err);
