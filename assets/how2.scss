@@ -26,11 +26,11 @@ a {
     }
     @include themify($themes) {
         color: themed('linkColor');
-        &:hover {
-            color: themed('linkHoverColor');
-        }
         &:visited {
             color: themed('linkVisitedColor');
+        }
+        &:hover {
+            color: themed('linkHoverColor');
         }
         &:active {
             color: themed('linkActiveColor');

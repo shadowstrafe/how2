@@ -24,18 +24,18 @@ a {
     outline: thin dotted; }
   .theme-light a {
     color: #0645ad; }
-    .theme-light a:hover {
-      color: #0066ee; }
     .theme-light a:visited {
       color: #0b0080; }
+    .theme-light a:hover {
+      color: #0066ee; }
     .theme-light a:active {
       color: #faa700; }
   .theme-dark a {
     color: #00adee; }
-    .theme-dark a:hover {
-      color: #33e0ff; }
     .theme-dark a:visited {
       color: #551a8b; }
+    .theme-dark a:hover {
+      color: #33e0ff; }
     .theme-dark a:active {
       color: #ff942e; }
 
