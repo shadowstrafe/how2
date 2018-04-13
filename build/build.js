@@ -102,16 +102,17 @@ function buildMarkdown (filePath) {
       const content = frontMatter(data);
       let metadata = content.attributes;
       metadata.date = lastModifiedOn;
+      metadata.tags = metadata.tags || [];
+      metadata.category = category;
 
       db.Insert({
         category: category,
         title: metadata.title,
-        tags: metadata.tags || [],
+        tags: metadata.tags,
         path: relativePath,
         date: metadata.date
       });
       if (shouldBuildHtml) {
-        content.attributes.category = category;
         var html = htmlify(content);
         var outputDir = path.join(config.build.outputpath, 'how2', category);
         mkdirp(outputDir, function (err) {
