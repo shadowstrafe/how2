@@ -1,12 +1,10 @@
 {
   "name": "how2",
-  "version": "0.3.1",
-  "description": "A tool for searching local documentation written in markdown.",
+  "version": "0.4.0",
+  "description": "A tool for making local documentation written in markdown searchable and viewable.",
   "main": "index.js",
-  "bin": {
-    "how2": "./index.js"
-  },
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "node-sass assets/how2.scss assets/how2.min.css --output-style compressed --source-map true"
   },
@@ -18,25 +16,18 @@
   "license": "ISC",
   "dependencies": {
     "chokidar": "^2.0.2",
-    "commander": "^2.11.0",
     "express": "^4.16.2",
     "front-matter": "^2.3.0",
     "glob": "^7.1.2",
     "handlebars": "^4.0.10",
     "highlight.js": "^9.12.0",
     "home-config": "^0.1.0",
-    "inquirer": "^3.3.0",
     "katex": "^0.9.0",
     "lowdb": "^1.0.0",
     "markdown-it": "^8.4.0",
     "markdown-it-math": "^4.1.0",
-    "mkdirp": "^0.5.1",
     "moment": "^2.19.1",
     "node-sass": "^4.8.3",
-    "opn": "^5.1.0",
-    "pkginfo": "^0.4.1",
-    "rimraf": "^2.6.2",
-    "serve-index": "^1.9.1",
     "slash": "^1.0.0"
   },
   "devDependencies": {
@@ -46,6 +37,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "nodemon": "^1.17.3"
   }
 }

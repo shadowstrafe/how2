@@ -1,10 +1,8 @@
 var express = require('express');
-var fs = require('fs');
-var path = require('path');
-var frontMatter = require('front-matter');
 
 var config = require('../config');
 var htmlify = require('../build/htmlify');
+var db = require('../build/how2db');
 
 const PORT = config.server.port;
 const STATIC_ROOT = config.build.buildhtml ? config.build.outputpath : config.source.assetdirpath;
@@ -12,48 +10,30 @@ const STATIC_ROOT = config.build.buildhtml ? config.build.outputpath : config.so
 var app = express();
 
 function start () {
-  console.log(STATIC_ROOT);
   app.use(express.static(STATIC_ROOT));
 
-  app.get('/how2/*.html', function (req, res) {
+  app.get('/how2/*', function (req, res) {
     try {
-      var p = req.params[0];
-      var sourceFilePath = path.resolve(config.source.sourcepath, p) + '.md';
-      outputHtml(sourceFilePath, res);
+      var howto = db.Get(req.params[0]);
+      res.send(htmlify(howto));
     } catch (err) {
       res.send(err);
     }
   });
 
-  app.listen(PORT, function () {
-    console.log('Documentation express server started on port ' + PORT);
-    console.log('Ctrl-C to kill the server');
-  }).on('error', function (err) {
-    if (err.errno !== 'EADDRINUSE') {
-      throw err;
+  app.get('/search', function (req, res) {
+    var q = req.query.q;
+    if (q) {
+      let results = db.GetAllWithMatchingTags(q.split(' '));
+      res.send(results.map(function (val) { return val.id; }));
+    } else {
+      let results = db.GetAll();
+      res.send(results.map(function (val) { return val.id; }));
     }
   });
-}
 
-function outputHtml (filePath, res) {
-  fs.stat(filePath, function (err, stats) {
-    if (err) {
-      throw err;
-    }
-    const lastModifiedOn = stats.mtime;
-    fs.readFile(filePath, 'utf8', function (err, data) {
-      if (err) {
-        throw err;
-      }
-      const content = frontMatter(data);
-      let metadata = content.attributes;
-      metadata.date = lastModifiedOn;
-      metadata.tags = metadata.tags || [];
-      metadata.category = ''; // TODO
-
-      var result = htmlify(content);
-      res.send(result);
-    });
+  app.listen(PORT, function () {
+    console.log('Documentation express server started on port ' + PORT);
   });
 }
 

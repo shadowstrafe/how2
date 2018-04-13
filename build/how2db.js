@@ -22,9 +22,9 @@ module.exports = {
       .push(howto)
       .write();
   },
-  Delete: function (path) {
+  Delete: function (id) {
     db.get('howtos')
-      .remove({ path: path })
+      .remove({ id: id })
       .write();
   },
   Clear: function () {
@@ -33,49 +33,46 @@ module.exports = {
         .write();
     } catch (__) { }
   },
-  Get: function (path) {
+  Upsert: function (howto) {
+    var existing = db.get('howtos')
+      .find({ id: howto.id })
+      .value();
+
+    if (existing) {
+      db.get('howtos')
+        .find({ id: howto.id })
+        .assign(howto)
+        .write();
+    } else {
+      db.get('howtos')
+        .push(howto)
+        .write();
+    }
+  },
+  Get: function (id) {
     return db.get('howtos')
-      .find({ path: path })
+      .find({ id: id })
       .value();
   },
   GetAll: function () {
     return db.get('howtos')
       .value();
   },
-  GetByTags: function (category, tags) {
+  GetAllWithMatchingTags: function (tags) {
     return db.get('howtos')
       .filter(function (howto) {
-        var pass = true;
-        if (category) {
-          pass = pass && category === howto.category;
-        }
         if (tags.length > 0) {
-          pass = pass && tags.every(function (tag) {
-            return howto.tags.includes(tag);
+          return tags.every(function (tag) {
+            return howto.attributes.tags.includes(tag);
           });
         }
-
-        return pass;
-      }).value()
-      .sort(function (a, b) {
-        if (a.category === b.category) {
-          if (a.title < b.title) {
-            return -1;
-          } else if (a.title > b.title) {
-            return 1;
-          } else {
-            return 0;
-          }
-        } else if (a.category < b.category) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
+      })
+      .sortBy(['attributes.category', 'attributes.title'])
+      .value();
   },
   GetCategories: function () {
     return db.get('howtos')
-      .map(function (howto) { return howto.category; })
+      .map(function (howto) { return howto.attributes.category; })
       .uniq()
       .sort()
       .value();

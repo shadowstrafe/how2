@@ -13,14 +13,15 @@ function buildAll () {
   }, function (err, matches) {
     if (err) throw err;
 
+    // TODO: Incremental builds.
     db.Clear();
     for (let i = 0; i < matches.length; i++) {
-      buildMarkdown(matches[i]);
+      build(matches[i]);
     }
   });
 }
 
-function buildMarkdown (filePath) {
+function build (filePath) {
   const relativePath = slash(filePath).replace(/.md$/, '');
   const absPath = path.resolve(config.source.sourcepath, filePath);
   const pathSegments = relativePath.split('/');
@@ -36,37 +37,25 @@ function buildMarkdown (filePath) {
         console.error(err);
         return;
       }
-      const content = frontMatter(data);
+      let content = frontMatter(data);
+      content.id = relativePath;
       let metadata = content.attributes;
       metadata.date = lastModifiedOn;
-      metadata.tags = metadata.tags || [];
+      metadata.tags = metadata.tags || [].concat(pathSegments.slice(0, -1));
       metadata.category = category;
 
-      db.Insert({
-        category: category,
-        title: metadata.title,
-        tags: metadata.tags,
-        path: relativePath,
-        date: metadata.date
-      });
+      db.Upsert(content);
     });
   });
 }
 
-function change (filePath) {
-  var relativePath = slash(filePath).replace(/.md$/, '');
-  db.Delete(relativePath);
-  buildMarkdown(filePath);
-}
-
 function remove (filePath) {
-  var relativePath = slash(filePath).replace(/.md$/, '');
-  db.Delete(relativePath);
+  var id = slash(filePath).replace(/.md$/, '');
+  db.Delete(id);
 }
 
 module.exports = {
   buildAll,
-  buildMarkdown,
-  change,
+  build,
   remove
 };

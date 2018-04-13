@@ -59,10 +59,9 @@ let md = new MarkdownIt({
   }
 });
 
-module.exports = function (fileContents) {
-  let templateData = fileContents.attributes;
-  templateData.content = md.render(fileContents.body);
-  templateData.rootdir = '/';
+module.exports = function (contents) {
+  let templateData = contents.attributes;
+  templateData.content = md.render(contents.body);
   if (templateData.date) {
     templateData.date = moment(templateData.date).format('Do MMMM YYYY');
   }

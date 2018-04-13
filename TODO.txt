@@ -1,11 +1,6 @@
-1) Consider serving files directly without writing to a dist folder. 
-    On the fly building of files means less storage required, scales better.
-    No need to depend on file deleting and syncing between db and dist folder.
-2) Consider integrating full text search.
-3) Consider setting up a full rebuild when the template changes on watch
-4) Setup a way to normalize queries
+1) Consider integrating full text search.
+2) Setup a way to normalize queries
     eg. when searching for the plural version, normalize to singular.
     could we use a configuration file?
-5) Asyncify / Promisify the build.
-6) Make builds incremental instead of full delete create. Possibly use last modified time to determine whether to build. (With an option to do a clean build)
-7) Experiment with sqlite? I'm worried about lowdb's scalability. Although sqlite might actually reduce performance! Need to test.
+3) Asyncify / Promisify the build.
+4) Make builds incremental instead of full delete create. Possibly use last modified time to determine whether to build. (With an option to do a clean build)
