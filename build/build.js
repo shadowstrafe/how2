@@ -88,17 +88,27 @@ function buildMarkdown (filePath) {
   const pathSegments = relativePath.split('/');
   const category = pathSegments.slice(0, -1).join('/');
   const fileName = pathSegments[pathSegments.length - 1];
-  fs.readFile(absPath, 'utf8', function (err, data) {
+  fs.stat(absPath, function (err, stats) {
     if (err) {
       console.error(err);
-    } else {
+      return;
+    }
+    const lastModifiedOn = stats.mtime;
+    fs.readFile(absPath, 'utf8', function (err, data) {
+      if (err) {
+        console.error(err);
+        return;
+      }
       const content = frontMatter(data);
-      const metadata = content.attributes;
+      let metadata = content.attributes;
+      metadata.date = lastModifiedOn;
+
       db.Insert({
         category: category,
         title: metadata.title,
         tags: metadata.tags || [],
-        path: relativePath
+        path: relativePath,
+        date: metadata.date
       });
       if (shouldBuildHtml) {
         content.attributes.category = category;
@@ -117,7 +127,7 @@ function buildMarkdown (filePath) {
           }
         });
       }
-    }
+    });
   });
 }
 
