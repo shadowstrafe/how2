@@ -38,6 +38,10 @@ module.exports = {
       .find({ path: path })
       .value();
   },
+  GetAll: function () {
+    return db.get('howtos')
+      .value();
+  },
   GetByTags: function (category, tags) {
     return db.get('howtos')
       .filter(function (howto) {
