@@ -12,7 +12,6 @@ config.source.templatepath = config.source.templatepath || path.resolve(config.s
 config.server.port = config.server.port || '5500';
 config.server.launch = config.server.launch === undefined ? false : config.server.launch;
 
-// Temporarily use a hardcoded dist path for now
 config.build.manifestdir = config.build.manifestdir || path.resolve(__dirname, './dist');
 config.build.outputpath = config.build.outputpath || path.resolve(__dirname, './dist');
 config.build.buildhtml = config.build.buildhtml === undefined ? false : config.build.buildhtml;
