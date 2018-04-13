@@ -70,7 +70,7 @@ if (program.build) {
     console.log(`Searching within the category '${category}'.`);
   }
 
-  let rows = db.Get(category, tags);
+  let rows = db.GetByTags(category, tags);
 
   if (rows.length === 0) {
     console.log('No howtos found.');

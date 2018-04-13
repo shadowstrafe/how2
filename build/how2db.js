@@ -24,7 +24,7 @@ module.exports = {
   },
   Delete: function (path) {
     db.get('howtos')
-      .remove(function (howto) { return howto.path === path; })
+      .remove({ path: path })
       .write();
   },
   Clear: function () {
@@ -33,7 +33,12 @@ module.exports = {
         .write();
     } catch (__) { }
   },
-  Get: function (category, tags) {
+  Get: function (path) {
+    return db.get('howtos')
+      .find({ path: path })
+      .value();
+  },
+  GetByTags: function (category, tags) {
     return db.get('howtos')
       .filter(function (howto) {
         var pass = true;
