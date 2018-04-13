@@ -5,7 +5,7 @@ var htmlify = require('../build/htmlify');
 var db = require('../build/how2db');
 
 const PORT = config.server.port;
-const STATIC_ROOT = config.build.buildhtml ? config.build.outputpath : config.source.assetdirpath;
+const STATIC_ROOT = config.assetDirpath;
 
 var app = express();
 
@@ -33,7 +33,7 @@ function start () {
   });
 
   app.listen(PORT, function () {
-    console.log('Documentation express server started on port ' + PORT);
+    console.log('Documentation express server listening on port ' + PORT);
   });
 }
 

@@ -1,19 +1,14 @@
-var config = require('home-config').load('.how2.config');
 var path = require('path');
 
-config.source = config.source || {};
-config.server = config.server || {};
-config.build = config.build || {};
+var env = process.env;
+var config = {};
 
-config.source.sourcepath = config.source.sourcepath || path.resolve(__dirname, './src/');
-config.source.assetdirpath = config.source.assetdirpath || path.resolve(__dirname, './assets/');
-config.source.templatepath = config.source.templatepath || path.resolve(config.source.assetpath, './how2.handlebars');
+config.sourceDirpath = env.HOW2_SOURCE_DIRPATH || path.resolve(__dirname, './src/');
+config.assetDirpath = env.HOW2_ASSET_DIRPATH || path.resolve(__dirname, './public/');
+config.templateFilepath = env.HOW2_TEMPLATE_FILEPATH || path.resolve(__dirname, './templates/how2.handlebars');
+config.manifestFilepath = env.HOW2_MANIFEST_FILEPATH || path.resolve(__dirname, './dist/how2db.json');
 
-config.server.port = config.server.port || '5500';
-config.server.launch = config.server.launch === undefined ? false : config.server.launch;
-
-config.build.manifestdir = config.build.manifestdir || path.resolve(__dirname, './dist');
-config.build.outputpath = config.build.outputpath || path.resolve(__dirname, './dist');
-config.build.buildhtml = config.build.buildhtml === undefined ? false : config.build.buildhtml;
+config.server = {};
+config.server.port = env.HOW2_PORT || '5500';
 
 module.exports = config;

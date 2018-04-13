@@ -8,7 +8,7 @@ var moment = require('moment');
 
 const config = require('../config.js');
 
-const TEMPLATE_PATH = config.source.templatepath;
+const TEMPLATE_PATH = config.templateFilepath;
 
 const templateSource = fs.readFileSync(TEMPLATE_PATH, 'utf8');
 var template = handlebars.compile(templateSource);

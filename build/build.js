@@ -9,7 +9,7 @@ var db = require('./how2db.js');
 
 function buildAll () {
   glob('**/*.md', {
-    cwd: slash(config.source.sourcepath)
+    cwd: slash(config.sourceDirpath)
   }, function (err, matches) {
     if (err) throw err;
 
@@ -23,7 +23,7 @@ function buildAll () {
 
 function build (filePath) {
   const relativePath = slash(filePath).replace(/.md$/, '');
-  const absPath = path.resolve(config.source.sourcepath, filePath);
+  const absPath = path.resolve(config.sourceDirpath, filePath);
   const pathSegments = relativePath.split('/');
   const category = pathSegments.slice(0, -1).join('/');
   fs.stat(absPath, function (err, stats) {

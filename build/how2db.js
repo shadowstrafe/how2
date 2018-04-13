@@ -5,11 +5,10 @@ var fs = require('fs');
 
 var config = require('../config.js');
 
-const DB_PATH = path.resolve(config.build.manifestdir, 'how2db.json');
+const DB_PATH = path.resolve(config.manifestFilepath);
+const DB_DIRPATH = path.dirname(DB_PATH);
 
-if (!fs.existsSync(config.build.manifestdir)) {
-  fs.mkdirSync(config.build.manifestdir);
-}
+!fs.existsSync(DB_DIRPATH) && fs.mkdirSync(DB_DIRPATH);
 
 var db = low(new FileSync(DB_PATH));
 db.defaults({

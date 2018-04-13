@@ -9,7 +9,7 @@ build.buildAll();
 var watcher = chokidar.watch('**/*.md', {
   persistent: true,
   ignoreInitial: true,
-  cwd: config.source.sourcepath
+  cwd: config.sourceDirpath
 });
 watcher
   .on('add', filePath => {
@@ -26,6 +26,6 @@ watcher
   })
   .on('error', error => console.error(error));
 
-console.log('Currently watching ' + config.source.sourcepath + ' for changes');
+console.log('Currently watching ' + config.sourceDirpath + ' for changes');
 
 server.start();
