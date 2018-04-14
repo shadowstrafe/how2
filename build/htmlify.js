@@ -1,17 +1,7 @@
-var handlebars = require('handlebars');
 var hljs = require('highlight.js');
 var escape = require('markdown-it')().utils.escapeHtml;
 var katex = require('katex');
 var MarkdownIt = require('markdown-it');
-var fs = require('fs');
-var moment = require('moment');
-
-const config = require('../config.js');
-
-const TEMPLATE_PATH = config.templateFilepath;
-
-const templateSource = fs.readFileSync(TEMPLATE_PATH, 'utf8');
-var template = handlebars.compile(templateSource);
 
 let md = new MarkdownIt({
   html: true,
@@ -59,11 +49,6 @@ let md = new MarkdownIt({
   }
 });
 
-module.exports = function (contents) {
-  let templateData = contents.attributes;
-  templateData.content = md.render(contents.body);
-  if (templateData.date) {
-    templateData.date = moment(templateData.date).format('Do MMMM YYYY');
-  }
-  return template(templateData);
+module.exports = function (content) {
+  return md.render(content);
 };

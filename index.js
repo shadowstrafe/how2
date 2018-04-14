@@ -3,7 +3,7 @@ var chokidar = require('chokidar');
 
 var build = require('./build/build.js');
 var config = require('./config.js');
-var server = require('./server/server.js');
+var server = require('./server.js');
 
 build.buildAll();
 var watcher = chokidar.watch('**/*.md', {

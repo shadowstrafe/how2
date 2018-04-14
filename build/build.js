@@ -41,7 +41,8 @@ function build (filePath) {
       content.id = relativePath;
       let metadata = content.attributes;
       metadata.date = lastModifiedOn;
-      metadata.tags = metadata.tags || [].concat(pathSegments.slice(0, -1));
+      metadata.tags = metadata.tags || [];
+      metadata.tags = metadata.tags.concat(pathSegments.slice(0, -1));
       metadata.category = category;
 
       db.Upsert(content);
