@@ -63,7 +63,7 @@ function build (filePath) {
           return;
         }
         howto.date = lastModifiedOn;
-        howto.tags = (howto.tags || []).concat(pathSegments.slice(0, -1));
+        howto.tags = pathSegments.slice(0, -1).concat((howto.tags || []));
         howto.category = category;
 
         db.Upsert(howto);
