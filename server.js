@@ -4,6 +4,7 @@ var config = require('./config');
 var htmlify = require('./build/htmlify');
 var db = require('./build/how2db');
 var path = require('path');
+var moment = require('moment');
 
 const PORT = config.server.port;
 const STATIC_ROOT = config.assetDirpath;
@@ -20,6 +21,7 @@ app.get('/how2/*.html', function (req, res) {
     var howto = db.Get(req.params[0]);
     var templateData = howto.attributes;
     templateData.content = htmlify(howto.body);
+    templateData.date = moment(templateData.date).format('D MMM YYYY, hh:mm a');
     res.render('how2', templateData);
   } catch (err) {
     res.send(err);
