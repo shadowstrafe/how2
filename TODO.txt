@@ -3,4 +3,6 @@
     eg. when searching for the plural version, normalize to singular.
     could we use a configuration file?
 3) Asyncify / Promisify the build.
-4) Make builds incremental instead of full delete create. Possibly use last modified time to determine whether to build. (With an option to do a clean build)
+4) Make builds incremental instead of full delete create.
+5) Use cookies to store theme settings. Include a theme swap button somewhere.
+6) Dockerize the project

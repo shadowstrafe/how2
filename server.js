@@ -19,6 +19,10 @@ app.use(express.static(STATIC_ROOT));
 app.get('/how2/*.html', function (req, res) {
   try {
     var howto = db.Get(req.params[0]);
+    if (!howto) {
+      res.sendStatus(404);
+      return;
+    }
     var templateData = howto.attributes;
     templateData.content = htmlify(howto.body);
     templateData.date = moment(templateData.date).format('D MMM YYYY, hh:mm a');
@@ -26,6 +30,21 @@ app.get('/how2/*.html', function (req, res) {
   } catch (err) {
     res.send(err);
   }
+});
+
+app.get('/how2/*', function (req, res) {
+  var category = req.params[0];
+  var results = db.GetAllWithCategory(category).map(function (val) {
+    return {
+      path: '/how2/' + val.id + '.html',
+      text: val.attributes.category + ' | ' + val.attributes.title
+    };
+  });
+  res.render('list', {
+    title: 'How 2',
+    search: '',
+    results: results
+  });
 });
 
 app.get('/search', function (req, res) {
@@ -38,11 +57,11 @@ app.get('/search', function (req, res) {
   }
   results = results.map(function (val) {
     return {
-      path: './how2/' + val.id + '.html',
+      path: '/how2/' + val.id + '.html',
       text: val.attributes.category + ' | ' + val.attributes.title
     };
   });
-  res.render('search', {
+  res.render('list', {
     title: 'How 2',
     search: q,
     results: results

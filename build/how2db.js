@@ -55,7 +55,20 @@ module.exports = {
   },
   GetAll: function () {
     return db.get('howtos')
-      .value();
+      .value()
+      .sort(function (a, b) {
+        if (a.attributes.category < b.attributes.category) {
+          return -1;
+        } else if (a.attributes.category > b.attributes.category) {
+          return 1;
+        } else if (a.attributes.title < b.attributes.title) {
+          return -1;
+        } else if (a.attributes.title > b.attributes.title) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
   },
   GetAllWithMatchingTags: function (tags) {
     return db.get('howtos')
@@ -66,14 +79,39 @@ module.exports = {
           });
         }
       })
-      .sortBy(['attributes.category', 'attributes.title'])
-      .value();
+      .value()
+      .sort(function (a, b) {
+        if (a.attributes.category < b.attributes.category) {
+          return -1;
+        } else if (a.attributes.category > b.attributes.category) {
+          return 1;
+        } else if (a.attributes.title < b.attributes.title) {
+          return -1;
+        } else if (a.attributes.title > b.attributes.title) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
   },
-  GetCategories: function () {
+  GetAllWithCategory: function (category) {
     return db.get('howtos')
-      .map(function (howto) { return howto.attributes.category; })
-      .uniq()
-      .sort()
-      .value();
+      .filter(function (howto) {
+        return howto.attributes.category === category;
+      })
+      .value()
+      .sort(function (a, b) {
+        if (a.attributes.category < b.attributes.category) {
+          return -1;
+        } else if (a.attributes.category > b.attributes.category) {
+          return 1;
+        } else if (a.attributes.title < b.attributes.title) {
+          return -1;
+        } else if (a.attributes.title > b.attributes.title) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
   }
 };
