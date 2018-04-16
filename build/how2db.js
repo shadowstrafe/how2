@@ -1,3 +1,5 @@
+var isDebug = process.env.NODE_ENV === 'development';
+
 var low = require('lowdb');
 var FileSync = require('lowdb/adapters/FileSync');
 var path = require('path');
@@ -15,44 +17,54 @@ db.defaults({
   'howtos': []
 }).write();
 
+function insert (howto) {
+  if (isDebug) {
+    console.log('how2db.js:Adding ' + howto.id);
+  }
+  db.get('howtos')
+    .push(howto)
+    .write();
+}
+
+function update (howto) {
+  if (isDebug) {
+    console.log('how2db.js:Updating ' + howto.id);
+  }
+  db.get('howtos')
+    .find({ id: howto.id })
+    .assign(howto)
+    .write();
+}
+
+function remove (id) {
+  if (isDebug) {
+    console.log('how2db.js:Deleting ' + id);
+  }
+  db.get('howtos')
+    .remove({ id: id })
+    .write();
+}
+
+function get (id) {
+  return db.get('howtos')
+    .find({ id: id })
+    .value();
+}
+
 module.exports = {
-  Insert: function (howto) {
-    db.get('howtos')
-      .push(howto)
-      .write();
-  },
-  Delete: function (id) {
-    db.get('howtos')
-      .remove({ id: id })
-      .write();
-  },
-  Clear: function () {
-    try {
-      db.set('howtos', [])
-        .write();
-    } catch (__) { }
-  },
+  Insert: insert,
+  Update: update,
+  Delete: remove,
   Upsert: function (howto) {
-    var existing = db.get('howtos')
-      .find({ id: howto.id })
-      .value();
+    var existing = get(howto.id);
 
     if (existing) {
-      db.get('howtos')
-        .find({ id: howto.id })
-        .assign(howto)
-        .write();
+      update(howto);
     } else {
-      db.get('howtos')
-        .push(howto)
-        .write();
+      insert(howto);
     }
   },
-  Get: function (id) {
-    return db.get('howtos')
-      .find({ id: id })
-      .value();
-  },
+  Get: get,
   GetAll: function () {
     return db.get('howtos')
       .value()

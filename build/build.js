@@ -14,7 +14,23 @@ function buildAll () {
     if (err) throw err;
 
     // TODO: Incremental builds.
-    db.Clear();
+    var fileIds = matches.map(function (val) {
+      return slash(val).replace(/.md$/, '');
+    });
+
+    var dbIds = db.GetAll().map(function (howto) {
+      return howto.id;
+    });
+
+    // Remove those in dbIds but not in fileIds
+    var toRemoveIds = dbIds.filter(function (dbId) {
+      return !fileIds.includes(dbId);
+    });
+
+    toRemoveIds.forEach(function (idToRemove) {
+      db.Delete(idToRemove);
+    });
+
     for (let i = 0; i < matches.length; i++) {
       build(matches[i]);
     }
@@ -32,25 +48,28 @@ function build (filePath) {
       return;
     }
     const lastModifiedOn = stats.mtime;
-    fs.readFile(absPath, 'utf8', function (err, data) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      let content = frontMatter(data);
-      content.id = relativePath;
-      let metadata = content.attributes;
-      if (metadata.title === undefined) {
-        console.warn('WARNING: file "' + absPath + '" is missing a title.');
-        return;
-      }
-      metadata.date = lastModifiedOn;
-      metadata.tags = metadata.tags || [];
-      metadata.tags = metadata.tags.concat(pathSegments.slice(0, -1));
-      metadata.category = category;
+    var existing = db.Get(relativePath);
+    if (!existing || existing.date < lastModifiedOn) {
+      fs.readFile(absPath, 'utf8', function (err, data) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        let content = frontMatter(data);
+        content.id = relativePath;
+        let metadata = content.attributes;
+        if (metadata.title === undefined) {
+          console.warn('WARNING: file "' + absPath + '" is missing a title.');
+          return;
+        }
+        metadata.date = lastModifiedOn;
+        metadata.tags = metadata.tags || [];
+        metadata.tags = metadata.tags.concat(pathSegments.slice(0, -1));
+        metadata.category = category;
 
-      db.Upsert(content);
-    });
+        db.Upsert(content);
+      });
+    }
   });
 }
 
