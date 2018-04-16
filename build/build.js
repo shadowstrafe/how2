@@ -40,6 +40,10 @@ function build (filePath) {
       let content = frontMatter(data);
       content.id = relativePath;
       let metadata = content.attributes;
+      if (metadata.title === undefined) {
+        console.warn('WARNING: file "' + absPath + '" is missing a title.');
+        return;
+      }
       metadata.date = lastModifiedOn;
       metadata.tags = metadata.tags || [];
       metadata.tags = metadata.tags.concat(pathSegments.slice(0, -1));
