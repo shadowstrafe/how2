@@ -4,7 +4,8 @@
   "description": "A tool for making local documentation written in markdown searchable and viewable.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "node-sass sass/how2.scss public/how2.min.css --output-style compressed --source-map true"
   },
@@ -16,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "chokidar": "^2.0.2",
+    "cross-env": "^5.1.4",
     "express": "^4.16.2",
     "front-matter": "^2.3.0",
     "glob": "^7.1.2",
