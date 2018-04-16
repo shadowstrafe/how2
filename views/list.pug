@@ -7,7 +7,7 @@ block content
     input(type='submit')
   if results.length > 0
     p #{results.length} results found.
-    ul
+    ol
       each result in results
         li
           a(href=result.path)= result.text

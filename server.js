@@ -37,7 +37,7 @@ app.get('/search', function (req, res) {
   var q = req.query.q;
   let results;
   if (q) {
-    results = db.GetAllWithMatchingTags(q.split(' '));
+    results = db.Search(q);
   } else {
     results = db.GetAll();
   }

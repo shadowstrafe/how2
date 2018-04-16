@@ -1,7 +1,6 @@
 var isDebug = process.env.NODE_ENV === 'development';
 
-var low = require('lowdb');
-var FileSync = require('lowdb/adapters/FileSync');
+var elasticlunr = require('elasticlunr');
 var path = require('path');
 var fs = require('fs');
 
@@ -12,48 +11,39 @@ const DB_DIRPATH = path.dirname(DB_PATH);
 
 !fs.existsSync(DB_DIRPATH) && fs.mkdirSync(DB_DIRPATH);
 
-var db = low(new FileSync(DB_PATH));
-db.defaults({
-  'howtos': []
-}).write();
+var db = elasticlunr(function () {
+  this.setRef('id');
+  this.addField('tags');
+  this.addField('title');
+  this.addField('body');
+});
 
 function insert (howto) {
   if (isDebug) {
     console.log('how2db.js:Adding ' + howto.id);
   }
-  db.get('howtos')
-    .push(howto)
-    .write();
+  howto.tags = howto.tags.join(', ');
+  db.addDoc(howto);
 }
 
 function update (howto) {
-  if (isDebug) {
-    console.log('how2db.js:Updating ' + howto.id);
-  }
-  db.get('howtos')
-    .find({ id: howto.id })
-    .assign(howto)
-    .write();
+  remove(howto.id);
+  insert(howto);
 }
 
 function remove (id) {
   if (isDebug) {
     console.log('how2db.js:Deleting ' + id);
   }
-  db.get('howtos')
-    .remove({ id: id })
-    .write();
+  db.removeDocByRef(id);
 }
 
 function get (id) {
-  return db.get('howtos')
-    .find({ id: id })
-    .value();
+  return db.documentStore.getDoc(id);
 }
 
 function getAll () {
-  return db.get('howtos')
-    .value()
+  return Object.values(db.documentStore.docs)
     .sort(function (a, b) {
       if (a.category < b.category) {
         return -1;
@@ -67,6 +57,20 @@ function getAll () {
         return 0;
       }
     });
+}
+
+function search (query) {
+  var searchResults = db.search(query, {
+    fields: {
+      tags: {boost: 10},
+      title: {boost: 2},
+      body: {boost: 1}
+    },
+    bool: 'AND'
+  });
+  return searchResults.map(function (val) {
+    return get(val.ref);
+  });
 }
 
 function getAllWithMatchingTags (tags) {
@@ -109,5 +113,6 @@ module.exports = {
   },
   Get: get,
   GetAll: getAll,
-  GetAllWithMatchingTags: getAllWithMatchingTags
+  GetAllWithMatchingTags: getAllWithMatchingTags,
+  Search: search
 };
