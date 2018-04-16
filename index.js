@@ -4,6 +4,7 @@ var chokidar = require('chokidar');
 var build = require('./build/build.js');
 var config = require('./config.js');
 var server = require('./server.js');
+var moment = require('moment');
 
 build.buildAll();
 var watcher = chokidar.watch('**/*.md', {
@@ -13,15 +14,18 @@ var watcher = chokidar.watch('**/*.md', {
 });
 watcher
   .on('add', filePath => {
-    console.log('file added ' + filePath);
+    var nowF = moment().format('hh:mm');
+    console.log(nowF + ' File added ' + filePath);
     build.build(filePath);
   })
   .on('change', filePath => {
-    console.log('file changed ' + filePath);
+    var nowF = moment().format('hh:mm');
+    console.log(nowF + ' File changed ' + filePath);
     build.build(filePath);
   })
   .on('unlink', filePath => {
-    console.log('file deleted ' + filePath);
+    var nowF = moment().format('hh:mm');
+    console.log(nowF + ' File deleted ' + filePath);
     build.remove(filePath);
   })
   .on('error', error => console.error(error));

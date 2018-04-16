@@ -55,6 +55,13 @@ app.get('/search', function (req, res) {
   });
 });
 
+app.get('/', function (req, res) {
+  res.render('index', {
+    title: 'How 2',
+    search: ''
+  });
+});
+
 function start () {
   app.listen(PORT, function () {
     console.log('Documentation express server listening on port ' + PORT);
