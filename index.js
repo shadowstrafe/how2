@@ -28,8 +28,7 @@ watcher
     console.log(nowF + ' File deleted ' + filePath);
     build.remove(filePath);
   })
+  .on('ready', () => console.log('Currently watching ' + config.sourceDirpath + ' for changes'))
   .on('error', error => console.error(error));
-
-console.log('Currently watching ' + config.sourceDirpath + ' for changes');
 
 server.start();

@@ -13,7 +13,6 @@ function buildAll () {
   }, function (err, matches) {
     if (err) throw err;
 
-    // TODO: Incremental builds.
     var fileIds = matches.map(function (val) {
       return slash(val).replace(/.md$/, '');
     });
@@ -49,7 +48,7 @@ function build (filePath) {
     }
     const lastModifiedOn = stats.mtime;
     var existing = db.Get(relativePath);
-    if (!existing || existing.date < lastModifiedOn) {
+    if (!existing || new Date(existing.attributes.date) < lastModifiedOn) {
       fs.readFile(absPath, 'utf8', function (err, data) {
         if (err) {
           console.error(err);
