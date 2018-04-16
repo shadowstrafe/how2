@@ -26,25 +26,12 @@ app.get('/how2/*.html', function (req, res) {
     var templateData = howto.attributes;
     templateData.content = htmlify(howto.body);
     templateData.date = moment(templateData.date).format('D MMM YYYY, hh:mm a');
+    templateData.categoryPath = '/search?q=' + templateData.category.replace('/', '%20');
+
     res.render('how2', templateData);
   } catch (err) {
     res.send(err);
   }
-});
-
-app.get('/how2/*', function (req, res) {
-  var category = req.params[0];
-  var results = db.GetAllWithCategory(category).map(function (val) {
-    return {
-      path: '/how2/' + val.id + '.html',
-      text: val.attributes.category + ' | ' + val.attributes.title
-    };
-  });
-  res.render('list', {
-    title: 'How 2',
-    search: '',
-    results: results
-  });
 });
 
 app.get('/search', function (req, res) {
