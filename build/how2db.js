@@ -51,6 +51,49 @@ function get (id) {
     .value();
 }
 
+function getAll () {
+  return db.get('howtos')
+    .value()
+    .sort(function (a, b) {
+      if (a.category < b.category) {
+        return -1;
+      } else if (a.category > b.category) {
+        return 1;
+      } else if (a.title < b.title) {
+        return -1;
+      } else if (a.title > b.title) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+}
+
+function getAllWithMatchingTags (tags) {
+  return db.get('howtos')
+    .filter(function (howto) {
+      if (tags.length > 0) {
+        return tags.every(function (tag) {
+          return howto.tags.includes(tag);
+        });
+      }
+    })
+    .value()
+    .sort(function (a, b) {
+      if (a.category < b.category) {
+        return -1;
+      } else if (a.category > b.category) {
+        return 1;
+      } else if (a.title < b.title) {
+        return -1;
+      } else if (a.title > b.title) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+}
+
 module.exports = {
   Insert: insert,
   Update: update,
@@ -65,65 +108,6 @@ module.exports = {
     }
   },
   Get: get,
-  GetAll: function () {
-    return db.get('howtos')
-      .value()
-      .sort(function (a, b) {
-        if (a.category < b.category) {
-          return -1;
-        } else if (a.category > b.category) {
-          return 1;
-        } else if (a.title < b.title) {
-          return -1;
-        } else if (a.title > b.title) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-  },
-  GetAllWithMatchingTags: function (tags) {
-    return db.get('howtos')
-      .filter(function (howto) {
-        if (tags.length > 0) {
-          return tags.every(function (tag) {
-            return howto.tags.includes(tag);
-          });
-        }
-      })
-      .value()
-      .sort(function (a, b) {
-        if (a.category < b.category) {
-          return -1;
-        } else if (a.category > b.category) {
-          return 1;
-        } else if (a.title < b.title) {
-          return -1;
-        } else if (a.title > b.title) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-  },
-  GetAllWithCategory: function (category) {
-    return db.get('howtos')
-      .filter(function (howto) {
-        return howto.category === category;
-      })
-      .value()
-      .sort(function (a, b) {
-        if (a.category < b.category) {
-          return -1;
-        } else if (a.category > b.category) {
-          return 1;
-        } else if (a.title < b.title) {
-          return -1;
-        } else if (a.title > b.title) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-  }
+  GetAll: getAll,
+  GetAllWithMatchingTags: getAllWithMatchingTags
 };
