@@ -69,13 +69,13 @@ module.exports = {
     return db.get('howtos')
       .value()
       .sort(function (a, b) {
-        if (a.attributes.category < b.attributes.category) {
+        if (a.category < b.category) {
           return -1;
-        } else if (a.attributes.category > b.attributes.category) {
+        } else if (a.category > b.category) {
           return 1;
-        } else if (a.attributes.title < b.attributes.title) {
+        } else if (a.title < b.title) {
           return -1;
-        } else if (a.attributes.title > b.attributes.title) {
+        } else if (a.title > b.title) {
           return 1;
         } else {
           return 0;
@@ -87,19 +87,19 @@ module.exports = {
       .filter(function (howto) {
         if (tags.length > 0) {
           return tags.every(function (tag) {
-            return howto.attributes.tags.includes(tag);
+            return howto.tags.includes(tag);
           });
         }
       })
       .value()
       .sort(function (a, b) {
-        if (a.attributes.category < b.attributes.category) {
+        if (a.category < b.category) {
           return -1;
-        } else if (a.attributes.category > b.attributes.category) {
+        } else if (a.category > b.category) {
           return 1;
-        } else if (a.attributes.title < b.attributes.title) {
+        } else if (a.title < b.title) {
           return -1;
-        } else if (a.attributes.title > b.attributes.title) {
+        } else if (a.title > b.title) {
           return 1;
         } else {
           return 0;
@@ -109,17 +109,17 @@ module.exports = {
   GetAllWithCategory: function (category) {
     return db.get('howtos')
       .filter(function (howto) {
-        return howto.attributes.category === category;
+        return howto.category === category;
       })
       .value()
       .sort(function (a, b) {
-        if (a.attributes.category < b.attributes.category) {
+        if (a.category < b.category) {
           return -1;
-        } else if (a.attributes.category > b.attributes.category) {
+        } else if (a.category > b.category) {
           return 1;
-        } else if (a.attributes.title < b.attributes.title) {
+        } else if (a.title < b.title) {
           return -1;
-        } else if (a.attributes.title > b.attributes.title) {
+        } else if (a.title > b.title) {
           return 1;
         } else {
           return 0;

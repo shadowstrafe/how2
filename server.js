@@ -18,13 +18,12 @@ app.use(express.static(STATIC_ROOT));
 
 app.get('/how2/*.html', function (req, res) {
   try {
-    var howto = db.Get(req.params[0]);
-    if (!howto) {
+    var templateData = db.Get(req.params[0]);
+    if (!templateData) {
       res.sendStatus(404);
       return;
     }
-    var templateData = howto.attributes;
-    templateData.content = htmlify(howto.body);
+    templateData.content = htmlify(templateData.body);
     templateData.date = moment(templateData.date).format('D MMM YYYY, hh:mm a');
     templateData.categoryPath = '/search?q=' + templateData.category.replace('/', '%20');
 
@@ -45,7 +44,7 @@ app.get('/search', function (req, res) {
   results = results.map(function (val) {
     return {
       path: '/how2/' + val.id + '.html',
-      text: val.attributes.category + ' | ' + val.attributes.title
+      text: val.category + ' | ' + val.title
     };
   });
   res.render('list', {

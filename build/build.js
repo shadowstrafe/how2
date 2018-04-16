@@ -48,25 +48,25 @@ function build (filePath) {
     }
     const lastModifiedOn = stats.mtime;
     var existing = db.Get(relativePath);
-    if (!existing || new Date(existing.attributes.date) < lastModifiedOn) {
+    if (!existing || new Date(existing.date) < lastModifiedOn) {
       fs.readFile(absPath, 'utf8', function (err, data) {
         if (err) {
           console.error(err);
           return;
         }
         let content = frontMatter(data);
-        content.id = relativePath;
-        let metadata = content.attributes;
-        if (metadata.title === undefined) {
+        let howto = content.attributes;
+        howto.id = relativePath;
+        howto.body = content.body;
+        if (howto.title === undefined) {
           console.warn('WARNING: file "' + absPath + '" is missing a title.');
           return;
         }
-        metadata.date = lastModifiedOn;
-        metadata.tags = metadata.tags || [];
-        metadata.tags = metadata.tags.concat(pathSegments.slice(0, -1));
-        metadata.category = category;
+        howto.date = lastModifiedOn;
+        howto.tags = (howto.tags || []).concat(pathSegments.slice(0, -1));
+        howto.category = category;
 
-        db.Upsert(content);
+        db.Upsert(howto);
       });
     }
   });
