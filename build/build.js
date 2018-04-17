@@ -3,6 +3,7 @@ var fs = require('fs');
 var glob = require('glob');
 var path = require('path');
 var slash = require('slash');
+var moment = require('moment');
 
 var config = require('../config.js');
 var db = require('./how2db.js');
@@ -59,10 +60,10 @@ function build (filePath) {
         howto.id = relativePath;
         howto.body = content.body;
         if (howto.title === undefined) {
-          console.warn('WARNING: file "' + absPath + '" is missing a title.');
+          console.warn('WARNING: "' + absPath + '" is missing a title and will be ignored.');
           return;
         }
-        howto.date = lastModifiedOn;
+        howto.date = moment(lastModifiedOn).format();
         howto.tags = pathSegments.slice(0, -1).concat((howto.tags || []));
         howto.category = category;
 
