@@ -22,6 +22,6 @@ if (env.HOW2_MANIFEST_FILEPATH) {
 }
 
 config.server = {};
-config.server.port = env.HOW2_PORT || '5500';
+config.server.port = env.HOW2_PORT || '80';
 
 module.exports = config;
