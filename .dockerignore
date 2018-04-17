@@ -8,5 +8,7 @@ docker-compose*
 README.md
 LICENSE
 .vscode
+dist
+src
 TODO.txt
 nodemon.json
