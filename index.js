@@ -10,7 +10,9 @@ build.buildAll();
 var watcher = chokidar.watch('**/*.md', {
   persistent: true,
   ignoreInitial: true,
-  cwd: config.sourceDirpath
+  cwd: config.sourceDirpath,
+  usePolling: true,
+  interval: 1000
 });
 watcher
   .on('add', filePath => {
