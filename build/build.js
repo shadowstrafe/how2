@@ -5,8 +5,9 @@ var path = require('path');
 var slash = require('slash');
 var moment = require('moment');
 
-var config = require('../config.js');
-var db = require('./how2db.js');
+var logger = require('../logger');
+var config = require('../config');
+var db = require('./how2db');
 
 function buildAll () {
   glob('**/*.md', {
@@ -44,7 +45,7 @@ function build (filePath) {
   const category = pathSegments.slice(0, -1).join('/');
   fs.stat(absPath, function (err, stats) {
     if (err) {
-      console.error(err);
+      logger.error(err);
       return;
     }
     const lastModifiedOn = stats.mtime;
@@ -52,7 +53,7 @@ function build (filePath) {
     if (!existing || new Date(existing.date) < lastModifiedOn) {
       fs.readFile(absPath, 'utf8', function (err, data) {
         if (err) {
-          console.error(err);
+          logger.error(err);
           return;
         }
         let content = frontMatter(data);
@@ -60,7 +61,7 @@ function build (filePath) {
         howto.id = relativePath;
         howto.body = content.body;
         if (howto.title === undefined) {
-          console.warn('WARNING: "' + absPath + '" is missing a title and will be ignored.');
+          logger.warn('"' + absPath + '" is missing a title and will be ignored');
           return;
         }
         howto.date = moment(lastModifiedOn).format();

@@ -1,5 +1,6 @@
 var moment = require('moment');
-var process = require('process');
+
+var config = require('./config');
 
 const LOG_LEVELS = {
   ERROR: 0,
@@ -10,9 +11,21 @@ const LOG_LEVELS = {
 };
 
 var currentLogLevel = LOG_LEVELS.INFO;
+var configLogLevel = config.logLevel.toLowerCase();
 
-if (process.env.NODE_ENV === 'development') {
-  currentLogLevel = LOG_LEVELS.DEBUG;
+switch (configLogLevel) {
+  case 'debug':
+    currentLogLevel = LOG_LEVELS.DEBUG;
+    break;
+  case 'verbose':
+    currentLogLevel = LOG_LEVELS.VERBOSE;
+    break;
+  case 'warn':
+    currentLogLevel = LOG_LEVELS.WARN;
+    break;
+  case 'error':
+    currentLogLevel = LOG_LEVELS.ERROR;
+    break;
 }
 
 function formatMessage (message, logLevel) {
@@ -21,25 +34,25 @@ function formatMessage (message, logLevel) {
 }
 
 function debug (message) {
-  if (currentLogLevel <= LOG_LEVELS.DEBUG) {
+  if (currentLogLevel >= LOG_LEVELS.DEBUG) {
     console.log(formatMessage(message, 'DEBUG'));
   }
 }
 
 function verbose (message) {
-  if (currentLogLevel <= LOG_LEVELS.VERBOSE) {
+  if (currentLogLevel >= LOG_LEVELS.VERBOSE) {
     console.log(formatMessage(message, 'VERBOSE'));
   }
 }
 
 function info (message) {
-  if (currentLogLevel <= LOG_LEVELS.INFO) {
+  if (currentLogLevel >= LOG_LEVELS.INFO) {
     console.log(formatMessage(message, 'INFO'));
   }
 }
 
 function warn (message) {
-  if (currentLogLevel <= LOG_LEVELS.WARN) {
+  if (currentLogLevel >= LOG_LEVELS.WARN) {
     console.error(formatMessage(message, 'WARN'));
   }
 }

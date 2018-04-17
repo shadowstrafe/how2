@@ -1,6 +1,5 @@
-var isDebug = process.env.NODE_ENV === 'development';
-
 var elasticlunr = require('elasticlunr');
+var logger = require('../logger');
 
 var db = elasticlunr(function () {
   this.setRef('id');
@@ -10,11 +9,9 @@ var db = elasticlunr(function () {
 });
 
 function insert (howto) {
-  if (isDebug) {
-    console.log('how2db.js:Adding ' + howto.id);
-  }
   howto.tags = howto.tags.join(', ');
   db.addDoc(howto);
+  logger.debug('how2db.js: Adding ' + howto.id);
 }
 
 function update (howto) {
@@ -23,9 +20,7 @@ function update (howto) {
 }
 
 function remove (id) {
-  if (isDebug) {
-    console.log('how2db.js:Deleting ' + id);
-  }
+  logger.debug('how2db.js: Deleting ' + id);
   db.removeDocByRef(id);
 }
 

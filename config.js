@@ -21,6 +21,16 @@ if (env.HOW2_MANIFEST_FILEPATH) {
   config.manifestFilepath = path.resolve(__dirname, './dist/how2db.json');
 }
 
+if (env.HOW2_LOG_LEVEL) {
+  config.logLevel = env.HOW2_LOG_LEVEL;
+} else {
+  if (process.env.NODE_ENV === 'development') {
+    config.logLevel = 'debug';
+  } else {
+    config.logLevel = 'info';
+  }
+}
+
 config.server = {};
 config.server.port = env.HOW2_PORT || '80';
 

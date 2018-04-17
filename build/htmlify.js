@@ -3,6 +3,8 @@ var escape = require('markdown-it')().utils.escapeHtml;
 var katex = require('katex');
 var MarkdownIt = require('markdown-it');
 
+var logger = require('../logger');
+
 let md = new MarkdownIt({
   html: true,
   linkify: false,
@@ -30,8 +32,8 @@ let md = new MarkdownIt({
         throwOnError: false
       });
     } catch (err) {
-      console.error(err);
-      console.warn('Error parsing inline math, rendering as raw expression.');
+      logger.warn('Error parsing inline math. Rendering as raw latex expression "' + str + '"');
+      logger.warn(err);
       return escape(str);
     }
   },
@@ -42,8 +44,8 @@ let md = new MarkdownIt({
         throwOnError: false
       });
     } catch (err) {
-      console.error(err);
-      console.warn('Error parsing block math, rendering as raw expression.');
+      logger.warn('Error parsing block math. Rendering as raw latex expression "' + str + '"');
+      logger.warn(err);
       return escape(str);
     }
   }

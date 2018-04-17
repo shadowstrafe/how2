@@ -1,10 +1,11 @@
 var express = require('express');
+var path = require('path');
+var moment = require('moment');
 
 var config = require('./config');
 var htmlify = require('./build/htmlify');
 var db = require('./build/how2db');
-var path = require('path');
-var moment = require('moment');
+var logger = require('./logger');
 
 const PORT = config.server.port;
 const STATIC_ROOT = config.assetDirpath;
@@ -63,7 +64,7 @@ app.get('/', function (req, res) {
 
 function start () {
   app.listen(PORT, function () {
-    console.log('Documentation express server listening on port ' + PORT);
+    logger.info('Documentation express server listening on port ' + PORT);
   });
 }
 
