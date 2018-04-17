@@ -1,8 +1,3 @@
-1) Consider integrating full text search.
-2) Setup a way to normalize queries
-    eg. when searching for the plural version, normalize to singular.
-    could we use a configuration file?
-3) Asyncify / Promisify the build.
-4) Make builds incremental instead of full delete create.
-5) Use cookies to store theme settings. Include a theme swap button somewhere.
-6) Dockerize the project
+1) Asyncify / Promisify the build.
+1) Use cookies to store theme settings. Include a theme swap button somewhere.
+1) Dockerize the project
