@@ -10,21 +10,27 @@ const LOG_LEVELS = {
   DEBUG: 4
 };
 
-var currentLogLevel = LOG_LEVELS.INFO;
+var currentLogLevel;
 var configLogLevel = config.logLevel.toLowerCase();
 
 switch (configLogLevel) {
   case 'debug':
     currentLogLevel = LOG_LEVELS.DEBUG;
+    info('Log level set to DEBUG');
     break;
   case 'verbose':
     currentLogLevel = LOG_LEVELS.VERBOSE;
+    info('Log level set to VERBOSE');
     break;
   case 'warn':
     currentLogLevel = LOG_LEVELS.WARN;
     break;
   case 'error':
     currentLogLevel = LOG_LEVELS.ERROR;
+    break;
+  default:
+    currentLogLevel = LOG_LEVELS.INFO;
+    info('Log level set to INFO');
     break;
 }
 
