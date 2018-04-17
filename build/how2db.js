@@ -1,15 +1,6 @@
 var isDebug = process.env.NODE_ENV === 'development';
 
 var elasticlunr = require('elasticlunr');
-var path = require('path');
-var fs = require('fs');
-
-var config = require('../config.js');
-
-const DB_PATH = path.resolve(config.manifestFilepath);
-const DB_DIRPATH = path.dirname(DB_PATH);
-
-!fs.existsSync(DB_DIRPATH) && fs.mkdirSync(DB_DIRPATH);
 
 var db = elasticlunr(function () {
   this.setRef('id');
