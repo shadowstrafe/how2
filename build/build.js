@@ -49,9 +49,16 @@ function build (filePath) {
       return;
     }
     var lastModifiedMoment = moment(stats.mtime).utc();
+    logger.debug('build.js:' + absPath + ' last modified on ' + lastModifiedMoment.toISOString());
 
     var existing = db.Get(relativePath);
-    if (!existing || moment(existing.date, moment.ISO_8601).utc().isBefore(lastModifiedMoment)) {
+    if (existing) {
+      logger.debug('build.js: existing found with id ' + relativePath);
+      logger.debug('build.js: ' + relativePath + ' has date value of ' + existing.date);
+      logger.debug('build.js: ' + relativePath + ' has momentjs utc of ' + moment(existing.date).toISOString());
+    }
+
+    if (!existing || moment(existing.date).utc().isBefore(lastModifiedMoment)) {
       fs.readFile(absPath, 'utf8', function (err, data) {
         if (err) {
           logger.error(err);

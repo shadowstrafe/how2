@@ -15,8 +15,8 @@ function insert (howto) {
 }
 
 function update (howto) {
-  remove(howto.id);
-  insert(howto);
+  logger.debug('how2db.js: Updating ' + howto.id);
+  db.updateDoc(howto);
 }
 
 function remove (id) {

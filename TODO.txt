@@ -4,3 +4,9 @@
 1) Maybe integrate with dropbox directly? Might mean less CPU usage since chokidar needs to poll on the bind mount.
 1) Data Persistence? How much performance gains if any will we get if we persist the data to disk.
 1) Client-side editor
+
+BUGS
+
+1) Weird bug where sometimes the document.date is returned from the document store not as a ISO8601 string but instead as a Javascript Date object, or a non-ISO8601 string... Added logging to try to determine why.
+
+    This messes up the moment constructor as it expects a string, thereby causing the document to not be updated as the app believes the file has not changed because the modified time is before the document time.
