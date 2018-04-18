@@ -1,13 +1,12 @@
 extends layout.pug
 
 block content
-  div(class='header')
-    h3(class='category')
-      a(href=categoryPath)= category
-    if version
-      h6(class='version') Version: #{version}
-    if date
+  div(class='how2')
+    div(class='how2-header')
       h6(class='date') Date: #{date}
-    h6 Tags: #{tags}
-    h1= title
-  div !{content}
+      if version
+        h6(class='version') Version: #{version}
+      h6 Tags: #{tags}
+      h3(class='category')= category
+      h1= title
+    div !{content}

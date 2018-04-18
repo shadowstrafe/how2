@@ -11,8 +11,8 @@ body {
     font-size: 12px;
     line-height: 1.7;
     padding: 1em;
-    margin: 0 auto 80vh;
     max-width: 45em;
+    margin: 0 auto 80vh;
     @include themify($themes) {
         color: themed('textColor');
         background-color: themed('backgroundColor');
@@ -204,29 +204,21 @@ table td {
     vertical-align: top;
 }
 
-.author {
-    font-size: 1.2em;
-    text-align: center;
-}
-
-.category {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.title {
+.how2-header {
     margin-top: 1em;
-    margin-bottom: 1em;
-}
 
-.version {
-    margin-top: 0;
-    margin-bottom: 0;
-}
+    h1, h2, h3, h4, h5, h6 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 
-.date {
-    margin-top: 0;
-    margin-bottom: 0;
+    .title {
+        margin-bottom: 1em;
+    }
+
+    .category {
+        margin-top: 1em
+    }
 }
 
 @media only screen and (min-width: 480px) {

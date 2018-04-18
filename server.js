@@ -35,7 +35,7 @@ app.get('/how2/*.html', function (req, res) {
       tags: howto.tags,
       title: howto.title,
       category: howto.category,
-      categoryPath: '/search?q=' + howto.category.replace('/', '%20')
+      search: howto.category.replace('/', '%20')
     };
 
     res.render('how2', templateData);

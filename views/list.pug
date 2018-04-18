@@ -1,10 +1,6 @@
 extends layout.pug
 
 block content
-  form(method='GET', action='/search')
-    label Search 
-      input(type='text', name='q', autofocus, value=search)
-    input(type='submit')
   if results.length > 0
     p #{results.length} results found.
     ol
