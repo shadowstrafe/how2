@@ -33,6 +33,7 @@ app.get('/how2/*.html', function (req, res) {
       date: moment(howto.date).local().format('D MMM YYYY, hh:mm a'),
       version: howto.version,
       tags: howto.tags,
+      title: howto.title,
       category: howto.category,
       categoryPath: '/search?q=' + howto.category.replace('/', '%20')
     };
