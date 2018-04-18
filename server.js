@@ -25,7 +25,7 @@ app.get('/how2/*.html', function (req, res) {
       return;
     }
     templateData.content = htmlify(templateData.body);
-    templateData.date = moment(templateData.date).format('D MMM YYYY, hh:mm a');
+    templateData.date = moment(templateData.date, moment.ISO_8601).local().format('D MMM YYYY, hh:mm a');
     templateData.categoryPath = '/search?q=' + templateData.category.replace('/', '%20');
 
     res.render('how2', templateData);

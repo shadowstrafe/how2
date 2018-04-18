@@ -48,9 +48,10 @@ function build (filePath) {
       logger.error(err);
       return;
     }
-    const lastModifiedOn = stats.mtime;
+    var lastModifiedMoment = moment(stats.mtime).utc();
+
     var existing = db.Get(relativePath);
-    if (!existing || new Date(existing.date) < lastModifiedOn) {
+    if (!existing || moment(existing.date, moment.ISO_8601).utc().isBefore(lastModifiedMoment)) {
       fs.readFile(absPath, 'utf8', function (err, data) {
         if (err) {
           logger.error(err);
@@ -64,7 +65,7 @@ function build (filePath) {
           logger.warn('"' + absPath + '" is missing a title and will be ignored');
           return;
         }
-        howto.date = moment(lastModifiedOn).format();
+        howto.date = lastModifiedMoment.toISOString();
         howto.tags = pathSegments.slice(0, -1).concat((howto.tags || []));
         howto.category = category;
 
