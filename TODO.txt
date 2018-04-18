@@ -7,6 +7,18 @@
 
 BUGS
 
-1) Weird bug where sometimes the document.date is returned from the document store not as a ISO8601 string but instead as a Javascript Date object, or a non-ISO8601 string... Added logging to try to determine why.
+1) Moment is throwing out warnings that input is not a valid format
 
-    This messes up the moment constructor as it expects a string, thereby causing the document to not be updated as the app believes the file has not changed because the modified time is before the document time.
+Weird bug where sometimes the document.date is returned from the document store not as a ISO8601 string but instead as a non-ISO8601 string... Added logging to try to determine why.
+
+This messes up the moment constructor as it expects a string, thereby causing the document to not be updated as the app believes the file has not changed because the modified time is before the document time.
+
+Status: Fixed
+
+This was because server.js was directly editing the JSON object in the store. The objects passed over from how2db.js were object references, not shallow copies. That meant that the line
+
+    templateData.date = moment(templateData.date).local().format('D MMM YYYY, hh:mm a');
+
+was actually propagating those changes back to the 'database'. As a result loading a howto article would alter the date in the elasticlunr index from a well formatted ISO8601 string to the one used for display.
+
+The fix now uses a new object instead of the original reference for the template data.

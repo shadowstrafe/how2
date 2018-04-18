@@ -19,14 +19,20 @@ app.use(express.static(STATIC_ROOT));
 
 app.get('/how2/*.html', function (req, res) {
   try {
-    var templateData = db.Get(req.params[0]);
-    if (!templateData) {
+    var howto = db.Get(req.params[0]);
+    if (!howto) {
       res.sendStatus(404);
       return;
     }
-    templateData.content = htmlify(templateData.body);
-    templateData.date = moment(templateData.date).local().format('D MMM YYYY, hh:mm a');
-    templateData.categoryPath = '/search?q=' + templateData.category.replace('/', '%20');
+
+    var templateData = {
+      content: htmlify(howto.body),
+      date: moment(howto.date).local().format('D MMM YYYY, hh:mm a'),
+      version: howto.version,
+      tags: howto.tags,
+      category: howto.category,
+      categoryPath: '/search?q=' + howto.category.replace('/', '%20')
+    };
 
     res.render('how2', templateData);
   } catch (err) {
