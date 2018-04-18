@@ -19,7 +19,9 @@ app.set('view engine', 'pug');
 app.use(express.static(STATIC_ROOT));
 
 app.get('/how2/*.html', function (req, res) {
+  logger.verbose('server.js: GET ' + req.originalUrl);
   try {
+    logger.debug('server.js: id=' + req.params[0]);
     var howto = db.Get(req.params[0]);
     if (!howto) {
       res.sendStatus(404);

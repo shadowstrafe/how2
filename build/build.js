@@ -53,9 +53,7 @@ function build (filePath) {
 
     var existing = db.Get(relativePath);
     if (existing) {
-      logger.debug('build.js: existing found with id ' + relativePath);
-      logger.debug('build.js: ' + relativePath + ' has date value of ' + existing.date);
-      logger.debug('build.js: ' + relativePath + ' has momentjs utc of ' + moment(existing.date).toISOString());
+      logger.debug('build.js: existing found with id ' + relativePath + ' with date value of ' + existing.date);
     }
 
     if (!existing || moment(existing.date).utc().isBefore(lastModifiedMoment)) {
