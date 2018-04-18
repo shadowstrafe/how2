@@ -16,7 +16,7 @@ var watcher = chokidar.watch('**/*.md', {
 });
 watcher
   .on('add', filePath => {
-    logger.info('File added' + filePath);
+    logger.info('File added ' + filePath);
     build.build(filePath);
   })
   .on('change', filePath => {
