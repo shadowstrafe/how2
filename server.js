@@ -9,6 +9,7 @@ var logger = require('./logger');
 
 const PORT = config.server.port;
 const STATIC_ROOT = config.assetDirpath;
+const SOURCE_DIRPATH = config.sourceDirpath;
 
 var app = express();
 
@@ -39,6 +40,8 @@ app.get('/how2/*.html', function (req, res) {
     res.send(err);
   }
 });
+
+app.use('/how2', express.static(SOURCE_DIRPATH));
 
 app.get('/search', function (req, res) {
   var q = req.query.q;
