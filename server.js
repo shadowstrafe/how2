@@ -39,11 +39,6 @@ app.use(express.static('public/'));
 
 // Setup cookie middleware
 app.use(cookieParser());
-app.use(function (req, res, next) {
-  var theme = req.cookies.how2theme;
-  logger.debug('how2theme cookie value: ' + theme);
-  next();
-});
 
 app.get('/', function (req, res) {
   res.render('index', {
