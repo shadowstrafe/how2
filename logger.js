@@ -11,9 +11,8 @@ const LOG_LEVELS = {
 };
 
 var currentLogLevel;
-var configLogLevel = config.logLevel.toLowerCase();
 
-switch (configLogLevel) {
+switch (config.logLevel) {
   case 'debug':
     currentLogLevel = LOG_LEVELS.DEBUG;
     info('Log level set to DEBUG');

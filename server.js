@@ -9,7 +9,6 @@ var db = require('./build/how2db');
 var logger = require('./logger');
 
 const PORT = config.server.port;
-const STATIC_ROOT = config.assetDirpath;
 const SOURCE_DIRPATH = config.sourceDirpath;
 
 const THEMES = {
@@ -35,8 +34,8 @@ app.use(function (req, res, next) {
 });
 
 // Static Sources
-app.use(express.static(STATIC_ROOT));
 app.use('/how2', express.static(SOURCE_DIRPATH));
+app.use(express.static('public/'));
 
 // Setup cookie middleware
 app.use(cookieParser());

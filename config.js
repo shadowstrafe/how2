@@ -6,13 +6,7 @@ var config = {};
 if (env.HOW2_SOURCE_DIRPATH) {
   config.sourceDirpath = path.resolve(env.HOW2_SOURCE_DIRPATH);
 } else {
-  config.sourceDirpath = path.resolve(__dirname, './src/');
-}
-
-if (env.HOW2_ASSET_DIRPATH) {
-  config.assetDirpath = path.resolve(env.HOW2_ASSET_DIRPATH);
-} else {
-  config.assetDirpath = path.resolve(__dirname, './public/');
+  config.sourceDirpath = path.resolve(__dirname, './public/how2');
 }
 
 if (env.HOW2_MANIFEST_FILEPATH) {
@@ -22,7 +16,7 @@ if (env.HOW2_MANIFEST_FILEPATH) {
 }
 
 if (env.HOW2_LOG_LEVEL) {
-  config.logLevel = env.HOW2_LOG_LEVEL;
+  config.logLevel = env.HOW2_LOG_LEVEL.toLowerCase();
 } else {
   if (process.env.NODE_ENV === 'development') {
     config.logLevel = 'debug';
