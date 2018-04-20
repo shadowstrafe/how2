@@ -35,7 +35,8 @@ app.get('/how2/*.html', function (req, res) {
       tags: howto.tags,
       title: howto.title,
       category: howto.category,
-      search: howto.category.replace('/', ' ')
+      search: howto.category.replace('/', ' '),
+      searchAutofocus: false
     };
 
     res.render('how2', templateData);
@@ -48,13 +49,13 @@ app.use('/how2', express.static(SOURCE_DIRPATH));
 
 app.get('/search', function (req, res) {
   var q = req.query.q;
-  let results;
+  let howtos;
   if (q) {
-    results = db.Search(q);
+    howtos = db.Search(q);
   } else {
-    results = db.GetAll();
+    howtos = db.GetAll();
   }
-  results = results.map(function (val) {
+  var results = howtos.map(function (val) {
     return {
       path: '/how2/' + val.id + '.html',
       text: val.category + ' | ' + val.title
@@ -63,6 +64,7 @@ app.get('/search', function (req, res) {
   res.render('list', {
     title: 'How 2',
     search: q,
+    searchAutofocus: true,
     results: results
   });
 });
@@ -70,7 +72,8 @@ app.get('/search', function (req, res) {
 app.get('/', function (req, res) {
   res.render('index', {
     title: 'How 2',
-    search: ''
+    search: '',
+    searchAutofocus: true
   });
 });
 
