@@ -9,6 +9,6 @@ README.md
 LICENSE
 .vscode
 dist
-how2
+public/how2
 TODO.txt
 nodemon.json
