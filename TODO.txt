@@ -1,7 +1,7 @@
+TODO
+
 1) Asyncify / Promisify the build.
-1) Use cookies to store theme settings. Include a theme swap button somewhere.
-1) Figure out serving images.
-1) Maybe integrate with dropbox directly? Might mean less CPU usage since chokidar needs to poll on the bind mount.
+1) Maybe integrate with dropbox directly?
 1) Data Persistence? How much performance gains if any will we get if we persist the data to disk.
 1) Client-side editor
 
