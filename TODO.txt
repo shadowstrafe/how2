@@ -1,8 +1,10 @@
 TODO
 
+1) Convert code to TypeScript
 1) Asyncify / Promisify the build.
 1) Maybe integrate with dropbox directly?
 1) Data Persistence? How much performance gains if any will we get if we persist the data to disk.
+    Or how about interacting directly with a database?
 1) Client-side editor
 
 BUGS
