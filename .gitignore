@@ -1,8 +1,5 @@
-# directory for how2 files
-/src
-
-# output folder
-/dist
+# Manifest file
+how2db.json
 
 # Logs
 logs
