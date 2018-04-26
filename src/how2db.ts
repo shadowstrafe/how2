@@ -1,5 +1,5 @@
 var elasticlunr = require('elasticlunr');
-var logger = require('../logger');
+var logger = require('./logger');
 
 var db = elasticlunr(function () {
   this.setRef('id');
@@ -84,7 +84,7 @@ function getAllWithMatchingTags (tags) {
     });
 }
 
-module.exports = {
+export = {
   Insert: insert,
   Update: update,
   Delete: remove,

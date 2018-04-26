@@ -5,13 +5,9 @@ how2 is a tool for building, searching and serving local documentation that was 
 ## Getting Started
 
 ``` shell
-npm run start
-```
-
-### Compiling CSS
-
-``` shell
-npm run compile
+npm install
+npm run build
+npm start
 ```
 
 ## Markdown

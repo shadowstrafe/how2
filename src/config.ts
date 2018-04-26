@@ -6,13 +6,13 @@ var config = {};
 if (env.HOW2_SOURCE_DIRPATH) {
   config.sourceDirpath = path.resolve(env.HOW2_SOURCE_DIRPATH);
 } else {
-  config.sourceDirpath = path.resolve(__dirname, './public/how2');
+  config.sourceDirpath = path.resolve(__dirname, './public/how2/');
 }
 
 if (env.HOW2_MANIFEST_FILEPATH) {
   config.manifestFilepath = path.resolve(env.HOW2_MANIFEST_FILEPATH);
 } else {
-  config.manifestFilepath = path.resolve(__dirname, './dist/how2db.json');
+  config.manifestFilepath = path.resolve(__dirname, './how2db.json');
 }
 
 if (env.HOW2_LOG_LEVEL) {

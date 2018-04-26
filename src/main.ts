@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-var chokidar = require('chokidar');
+import * as chokidar from 'chokidar';
 
-var build = require('./build/build');
+var build = require('./build');
 var config = require('./config');
 var server = require('./server');
 var logger = require('./logger');

@@ -2,10 +2,9 @@ doctype html
 html(class= theme.cls)
   head
     title= title
-    link(rel='stylesheet', href='/css/fonts.css')
-    link(rel='stylesheet', href='/css/katex.min.css')
-    link(rel='stylesheet', href='/css/highlightjs/' + theme.hljs)
-    link(rel='stylesheet', href='/css/how2.min.css')
+    link(rel='stylesheet', href='/css/lib/katex/katex.min.css')
+    link(rel='stylesheet', href='/css/lib/highlightjs/' + theme.hljs)
+    link(rel='stylesheet', href='/css/main.min.css')
   body
     div(class='header')
       form(method='GET', action='/search')
@@ -13,5 +12,5 @@ html(class= theme.cls)
           input(type='text', name='q', autofocus=searchAutofocus, value=search)
         input(type='submit')
     block content
-    script(src='/js/jquery.min.js')
+    script(src='/js/lib/jquery.min.js')
     script(src='/js/app.js')

@@ -4,8 +4,8 @@ var moment = require('moment');
 var path = require('path');
 
 var config = require('./config');
-var htmlify = require('./build/htmlify');
-var db = require('./build/how2db');
+var htmlify = require('./htmlify');
+var db = require('./how2db');
 var logger = require('./logger');
 
 const PORT = config.server.port;
@@ -24,7 +24,7 @@ const THEMES = {
 
 var app = express();
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
 // Logging
@@ -35,7 +35,7 @@ app.use(function (req, res, next) {
 
 // Static Sources
 app.use('/how2', express.static(SOURCE_DIRPATH));
-app.use(express.static('public/'));
+app.use(express.static(path.resolve(__dirname, 'public')));
 
 // Setup cookie middleware
 app.use(cookieParser());

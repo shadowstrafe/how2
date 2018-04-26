@@ -4,10 +4,13 @@
   "description": "A tool for making local documentation written in markdown searchable and viewable.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "node dist/main.js",
+    "dev": "cross-env NODE_ENV=development nodemon dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "node-sass sass/how2.scss public/css/how2.min.css --output-style compressed --source-map true"
+    "build": "npm run build-sass && npm run build-ts && npm run copy-static-assets",
+    "build-ts": "tsc",
+    "build-sass": "node-sass src/public/css/main.scss dist/public/css/main.min.css --output-style compressed",
+    "copy-static-assets": "ts-node copyStaticAssets.ts"
   },
   "repository": {
     "type": "git",
@@ -31,15 +34,13 @@
     "slash": "^1.0.0"
   },
   "devDependencies": {
+    "@types/chokidar": "^1.7.5",
+    "@types/shelljs": "^0.7.8",
     "cross-env": "^5.1.4",
-    "eslint": "^4.10.0",
-    "eslint-config-semistandard": "^11.0.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "node-sass": "^4.8.3",
     "nodemon": "^1.17.3",
-    "node-sass": "^4.8.3"
+    "shelljs": "^0.8.1",
+    "ts-node": "^6.0.1",
+    "typescript": "^2.8.3"
   }
 }

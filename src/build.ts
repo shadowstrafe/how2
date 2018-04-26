@@ -5,8 +5,8 @@ var path = require('path');
 var slash = require('slash');
 var moment = require('moment');
 
-var logger = require('../logger');
-var config = require('../config');
+var logger = require('./logger');
+var config = require('./config');
 var db = require('./how2db');
 
 function buildAll () {

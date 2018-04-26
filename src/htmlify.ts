@@ -3,7 +3,7 @@ var escape = require('markdown-it')().utils.escapeHtml;
 var katex = require('katex');
 var MarkdownIt = require('markdown-it');
 
-var logger = require('../logger');
+var logger = require('./logger');
 
 let md = new MarkdownIt({
   html: true,
@@ -51,6 +51,6 @@ let md = new MarkdownIt({
   }
 });
 
-module.exports = function (content) {
+export = function (content) {
   return md.render(content);
 };

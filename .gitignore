@@ -1,6 +1,3 @@
-# Manifest file
-how2db.json
-
 # Logs
 logs
 *.log
@@ -60,4 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
-public/how2/
+dist/
+src/public/how2/

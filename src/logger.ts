@@ -66,7 +66,7 @@ function error (message) {
   console.error(formatMessage(message, 'ERROR'));
 }
 
-module.exports = {
+export = {
   debug,
   verbose,
   info,
