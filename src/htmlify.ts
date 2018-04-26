@@ -3,13 +3,13 @@ var escape = require('markdown-it')().utils.escapeHtml;
 var katex = require('katex');
 var MarkdownIt = require('markdown-it');
 
-var logger = require('./logger');
+import * as logger from './logger';
 
 let md = new MarkdownIt({
   html: true,
   linkify: false,
   typographer: false,
-  highlight: function (str, lang) {
+  highlight: function (str: string, lang:string) {
     if (lang && hljs.getLanguage(lang)) {
       try {
         return '<pre class="hljs"><code>' +
@@ -26,7 +26,7 @@ let md = new MarkdownIt({
   inlineClose: '$',
   blockOpen: '$$',
   blockClose: '$$',
-  inlineRenderer: function (str) {
+  inlineRenderer: function (str: string) {
     try {
       return katex.renderToString(str, {
         throwOnError: false
@@ -37,7 +37,7 @@ let md = new MarkdownIt({
       return escape(str);
     }
   },
-  blockRenderer: function (str) {
+  blockRenderer: function (str: string) {
     try {
       return katex.renderToString(str, {
         displayMode: true,
@@ -51,6 +51,6 @@ let md = new MarkdownIt({
   }
 });
 
-export = function (content) {
+export function htmlify(content: string) {
   return md.render(content);
 };

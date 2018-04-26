@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import * as chokidar from 'chokidar';
 
-var build = require('./build');
-var config = require('./config');
-var server = require('./server');
-var logger = require('./logger');
+import * as logger from './logger';
+import config from './config';
+import { start as startServer } from './server';
+import { buildAll, build, remove } from './build';
 
-build.buildAll();
+buildAll();
+
 var watcher = chokidar.watch('**/*.md', {
   persistent: true,
   ignoreInitial: true,
@@ -17,17 +18,17 @@ var watcher = chokidar.watch('**/*.md', {
 watcher
   .on('add', filePath => {
     logger.info('File added ' + filePath);
-    build.build(filePath);
+    build(filePath);
   })
   .on('change', filePath => {
     logger.info('File changed ' + filePath);
-    build.build(filePath);
+    build(filePath);
   })
   .on('unlink', filePath => {
     logger.info('File deleted ' + filePath);
-    build.remove(filePath);
+    remove(filePath);
   })
   .on('ready', () => logger.info('Currently watching ' + config.sourceDirpath + ' for changes'))
   .on('error', error => logger.error(error));
 
-server.start();
+startServer();

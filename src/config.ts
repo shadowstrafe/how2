@@ -1,7 +1,14 @@
 var path = require('path');
 
+interface AppConfiguration {
+  sourceDirpath: string;
+  manifestFilepath: string;
+  expressPort: string;
+  logLevel: string
+}
+
 var env = process.env;
-var config = {};
+var config = <AppConfiguration> {};
 
 if (env.HOW2_SOURCE_DIRPATH) {
   config.sourceDirpath = path.resolve(env.HOW2_SOURCE_DIRPATH);
@@ -25,7 +32,6 @@ if (env.HOW2_LOG_LEVEL) {
   }
 }
 
-config.server = {};
-config.server.port = env.HOW2_PORT || '80';
+config.expressPort = env.HOW2_PORT || '80';
 
-module.exports = config;
+export = config;

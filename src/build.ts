@@ -1,15 +1,16 @@
-var frontMatter = require('front-matter');
-var fs = require('fs');
-var glob = require('glob');
-var path = require('path');
-var slash = require('slash');
-var moment = require('moment');
+import frontMatter from 'front-matter';
+import fs from 'fs';
+import glob from 'glob';
+import path from 'path';
+import slash from 'slash';
+import moment from 'moment';
 
-var logger = require('./logger');
-var config = require('./config');
-var db = require('./how2db');
+import * as logger from './logger';
+import config from './config';
+import * as db from './how2db';
+import { How2Article } from './How2Article';
 
-function buildAll () {
+export function buildAll () {
   glob('**/*.md', {
     cwd: slash(config.sourceDirpath)
   }, function (err, matches) {
@@ -19,17 +20,17 @@ function buildAll () {
       return slash(val).replace(/.md$/, '');
     });
 
-    var dbIds = db.GetAll().map(function (howto) {
+    var dbIds = db.getAll().map(function (howto) {
       return howto.id;
     });
 
     // Remove those in dbIds but not in fileIds
     var toRemoveIds = dbIds.filter(function (dbId) {
-      return !fileIds.includes(dbId);
+      return fileIds.some((fileId) =>fileId == dbId);
     });
 
     toRemoveIds.forEach(function (idToRemove) {
-      db.Delete(idToRemove);
+      db.remove(idToRemove);
     });
 
     for (let i = 0; i < matches.length; i++) {
@@ -38,7 +39,7 @@ function buildAll () {
   });
 }
 
-function build (filePath) {
+export function build (filePath: string) {
   const relativePath = slash(filePath).replace(/.md$/, '');
   const absPath = path.resolve(config.sourceDirpath, filePath);
   const pathSegments = relativePath.split('/');
@@ -51,7 +52,7 @@ function build (filePath) {
     var lastModifiedMoment = moment(stats.mtime).utc();
     logger.debug('build.js:' + absPath + ' last modified on ' + lastModifiedMoment.toISOString());
 
-    var existing = db.Get(relativePath);
+    var existing = db.get(relativePath);
     if (existing) {
       logger.debug('build.js: existing found with id ' + relativePath + ' with date value of ' + existing.date);
     }
@@ -63,30 +64,30 @@ function build (filePath) {
           return;
         }
         let content = frontMatter(data);
-        let howto = content.attributes;
-        howto.id = relativePath;
-        howto.body = content.body;
-        if (howto.title === undefined) {
+        let metadata = <any> content.attributes;
+
+        var article = <How2Article>{};
+        article.id = relativePath;
+        article.tags = pathSegments.slice(0, -1).concat((metadata.tags || [])).join(', ');
+        article.body = content.body;
+
+        if (metadata.title === undefined) {
           logger.warn('"' + absPath + '" is missing a title and will be ignored');
           return;
-        }
-        howto.date = lastModifiedMoment.toISOString();
-        howto.tags = pathSegments.slice(0, -1).concat((howto.tags || []));
-        howto.category = category;
+        } 
+        article.title = metadata.title;
 
-        db.Upsert(howto);
+        article.version = metadata.version;
+        article.date = lastModifiedMoment.toISOString();
+        article.category = category;
+
+        db.upsert(article);
       });
     }
   });
 }
 
-function remove (filePath) {
+export function remove (filePath: string) {
   var id = slash(filePath).replace(/.md$/, '');
-  db.Delete(id);
+  db.remove(id);
 }
-
-module.exports = {
-  buildAll,
-  build,
-  remove
-};

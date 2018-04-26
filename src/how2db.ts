@@ -1,36 +1,49 @@
+// import elasticlunr from 'elasticlunr';
 var elasticlunr = require('elasticlunr');
-var logger = require('./logger');
 
-var db = elasticlunr(function () {
+import * as logger from './logger';
+import { How2Article } from './How2Article';
+
+var index = elasticlunr(function () {
   this.setRef('id');
   this.addField('tags');
   this.addField('title');
   this.addField('body');
 });
 
-function insert (howto) {
-  howto.tags = howto.tags.join(', ');
-  db.addDoc(howto);
+export function insert (howto: How2Article) {
+  index.addDoc(howto);
   logger.debug('how2db.js: Adding ' + howto.id);
 }
 
-function update (howto) {
+export function update (howto: How2Article): void {
   logger.debug('how2db.js: Updating ' + howto.id);
-  db.updateDoc(howto);
+  index.updateDoc(howto);
 }
 
-function remove (id) {
+export function upsert (howto: How2Article): void {
+  var existing = index.documentStore.hasDoc(howto.id);
+
+  if (existing) {
+    update(howto);
+  } else {
+    insert(howto);
+  }
+}
+
+export function remove (id: string): void {
   logger.debug('how2db.js: Deleting ' + id);
-  db.removeDocByRef(id);
+  index.removeDocByRef(id);
 }
 
-function get (id) {
-  return db.documentStore.getDoc(id);
+export function get (id: string): How2Article {
+  return index.documentStore.getDoc(id);
 }
 
-function getAll () {
-  return Object.values(db.documentStore.docs)
-    .sort(function (a, b) {
+export function getAll (): How2Article[] {
+  var docs = index.documentStore.docs;
+  return Object.keys(docs).map((key) => docs[key])
+    .sort(function (a: any, b: any) {
       if (a.category < b.category) {
         return -1;
       } else if (a.category > b.category) {
@@ -45,8 +58,8 @@ function getAll () {
     });
 }
 
-function search (query) {
-  var searchResults = db.search(query, {
+export function search (query: string): How2Article[] {
+  var searchResults = index.search(query, {
     fields: {
       tags: {boost: 10},
       title: {boost: 2},
@@ -54,51 +67,7 @@ function search (query) {
     },
     bool: 'AND'
   });
-  return searchResults.map(function (val) {
+  return searchResults.map((val: any) => {
     return get(val.ref);
   });
 }
-
-function getAllWithMatchingTags (tags) {
-  return db.get('howtos')
-    .filter(function (howto) {
-      if (tags.length > 0) {
-        return tags.every(function (tag) {
-          return howto.tags.includes(tag);
-        });
-      }
-    })
-    .value()
-    .sort(function (a, b) {
-      if (a.category < b.category) {
-        return -1;
-      } else if (a.category > b.category) {
-        return 1;
-      } else if (a.title < b.title) {
-        return -1;
-      } else if (a.title > b.title) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-}
-
-export = {
-  Insert: insert,
-  Update: update,
-  Delete: remove,
-  Upsert: function (howto) {
-    var existing = get(howto.id);
-
-    if (existing) {
-      update(howto);
-    } else {
-      insert(howto);
-    }
-  },
-  Get: get,
-  GetAll: getAll,
-  GetAllWithMatchingTags: getAllWithMatchingTags,
-  Search: search
-};

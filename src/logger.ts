@@ -1,75 +1,68 @@
-var moment = require('moment');
+import moment from 'moment';
+import config from './config';
 
-var config = require('./config');
-
-const LOG_LEVELS = {
-  ERROR: 0,
-  WARN: 1,
-  INFO: 2,
-  VERBOSE: 3,
-  DEBUG: 4
+const enum LOG_LEVEL {
+  ERROR = 0,
+  WARN = 1,
+  INFO = 2,
+  VERBOSE = 3,
+  DEBUG = 4
 };
 
-var currentLogLevel;
+var currentLogLevel : LOG_LEVEL;
 
 switch (config.logLevel) {
   case 'debug':
-    currentLogLevel = LOG_LEVELS.DEBUG;
+    currentLogLevel = LOG_LEVEL.DEBUG;
     info('Log level set to DEBUG');
     break;
   case 'verbose':
-    currentLogLevel = LOG_LEVELS.VERBOSE;
+    currentLogLevel = LOG_LEVEL.VERBOSE;
     info('Log level set to VERBOSE');
     break;
   case 'warn':
-    currentLogLevel = LOG_LEVELS.WARN;
+    currentLogLevel = LOG_LEVEL.WARN;
     break;
   case 'error':
-    currentLogLevel = LOG_LEVELS.ERROR;
+    currentLogLevel = LOG_LEVEL.ERROR;
     break;
   default:
-    currentLogLevel = LOG_LEVELS.INFO;
+    currentLogLevel = LOG_LEVEL.INFO;
     info('Log level set to INFO');
     break;
 }
 
-function formatMessage (message, logLevel) {
+function formatMessage (message: string, logLevel: string) {
   var nowF = moment().format('D/MMM/YY HH:mm:ss');
   return nowF + ' ' + logLevel + ' ' + message;
 }
 
-function debug (message) {
-  if (currentLogLevel >= LOG_LEVELS.DEBUG) {
+export function debug (message: any) {
+  if (currentLogLevel >= LOG_LEVEL.DEBUG) {
     console.log(formatMessage(message, 'DEBUG'));
   }
 }
 
-function verbose (message) {
-  if (currentLogLevel >= LOG_LEVELS.VERBOSE) {
+export function verbose (message: any) {
+  if (currentLogLevel >= LOG_LEVEL.VERBOSE) {
     console.log(formatMessage(message, 'VERBOSE'));
   }
 }
 
-function info (message) {
-  if (currentLogLevel >= LOG_LEVELS.INFO) {
+export function info (message: any) {
+  if (currentLogLevel >= LOG_LEVEL.INFO) {
     console.log(formatMessage(message, 'INFO'));
   }
 }
 
-function warn (message) {
-  if (currentLogLevel >= LOG_LEVELS.WARN) {
+export function warn (message: any) {
+  if (currentLogLevel >= LOG_LEVEL.WARN) {
     console.error(formatMessage(message, 'WARN'));
   }
 }
 
-function error (message) {
+export function error (exception: Error): void;
+export function error (message: string): void;
+export function error (message: any): void {
   console.error(formatMessage(message, 'ERROR'));
 }
-
-export = {
-  debug,
-  verbose,
-  info,
-  warn,
-  error
-};
