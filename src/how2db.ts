@@ -1,49 +1,48 @@
-// import elasticlunr from 'elasticlunr';
-var elasticlunr = require('elasticlunr');
+// tslint:disable-next-line:no-var-requires
+const elasticlunr = require('elasticlunr');
 
+import { IHow2Article } from './How2Article';
 import * as logger from './logger';
-import { How2Article } from './How2Article';
 
-var index = elasticlunr(function () {
+// tslint:disable-next-line:only-arrow-functions
+const index = elasticlunr(function() {
   this.setRef('id');
   this.addField('tags');
   this.addField('title');
   this.addField('body');
 });
 
-export function insert (howto: How2Article) {
+export function insert(howto: IHow2Article) {
   index.addDoc(howto);
   logger.debug('how2db.js: Adding ' + howto.id);
 }
 
-export function update (howto: How2Article): void {
+export function update(howto: IHow2Article): void {
   logger.debug('how2db.js: Updating ' + howto.id);
   index.updateDoc(howto);
 }
 
-export function upsert (howto: How2Article): void {
-  var existing = index.documentStore.hasDoc(howto.id);
-
-  if (existing) {
+export function upsert(howto: IHow2Article): void {
+  if (index.documentStore.hasDoc(howto.id)) {
     update(howto);
   } else {
     insert(howto);
   }
 }
 
-export function remove (id: string): void {
+export function remove(id: string): void {
   logger.debug('how2db.js: Deleting ' + id);
   index.removeDocByRef(id);
 }
 
-export function get (id: string): How2Article {
+export function get(id: string): IHow2Article {
   return index.documentStore.getDoc(id);
 }
 
-export function getAll (): How2Article[] {
-  var docs = index.documentStore.docs;
+export function getAll(): IHow2Article[] {
+  const docs = index.documentStore.docs;
   return Object.keys(docs).map((key) => docs[key])
-    .sort(function (a: any, b: any) {
+    .sort((a: IHow2Article, b: IHow2Article) => {
       if (a.category < b.category) {
         return -1;
       } else if (a.category > b.category) {
@@ -58,14 +57,14 @@ export function getAll (): How2Article[] {
     });
 }
 
-export function search (query: string): How2Article[] {
-  var searchResults = index.search(query, {
+export function search(query: string): IHow2Article[] {
+  const searchResults = index.search(query, {
     fields: {
       tags: {boost: 10},
       title: {boost: 2},
-      body: {boost: 1}
+      body: {boost: 1},
     },
-    bool: 'AND'
+    bool: 'AND',
   });
   return searchResults.map((val: any) => {
     return get(val.ref);

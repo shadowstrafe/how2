@@ -1,6 +1,6 @@
-import $ from "jquery";
+import $ from 'jquery';
 
-$(document).ready(function() {
+$(document).ready(() => {
   // Place JavaScript code here...
 
 });

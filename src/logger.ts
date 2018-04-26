@@ -6,10 +6,10 @@ const enum LOG_LEVEL {
   WARN = 1,
   INFO = 2,
   VERBOSE = 3,
-  DEBUG = 4
-};
+  DEBUG = 4,
+}
 
-var currentLogLevel : LOG_LEVEL;
+let currentLogLevel: LOG_LEVEL;
 
 switch (config.logLevel) {
   case 'debug':
@@ -32,37 +32,35 @@ switch (config.logLevel) {
     break;
 }
 
-function formatMessage (message: string, logLevel: string) {
-  var nowF = moment().format('D/MMM/YY HH:mm:ss');
+function formatMessage(message: string, logLevel: string) {
+  const nowF = moment().format('D/MMM/YY HH:mm:ss');
   return nowF + ' ' + logLevel + ' ' + message;
 }
 
-export function debug (message: any) {
+export function debug(message: any) {
   if (currentLogLevel >= LOG_LEVEL.DEBUG) {
     console.log(formatMessage(message, 'DEBUG'));
   }
 }
 
-export function verbose (message: any) {
+export function verbose(message: any) {
   if (currentLogLevel >= LOG_LEVEL.VERBOSE) {
     console.log(formatMessage(message, 'VERBOSE'));
   }
 }
 
-export function info (message: any) {
+export function info(message: any) {
   if (currentLogLevel >= LOG_LEVEL.INFO) {
     console.log(formatMessage(message, 'INFO'));
   }
 }
 
-export function warn (message: any) {
+export function warn(message: any) {
   if (currentLogLevel >= LOG_LEVEL.WARN) {
     console.error(formatMessage(message, 'WARN'));
   }
 }
 
-export function error (exception: Error): void;
-export function error (message: string): void;
-export function error (message: any): void {
+export function error(message: any): void {
   console.error(formatMessage(message, 'ERROR'));
 }

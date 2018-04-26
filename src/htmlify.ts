@@ -1,35 +1,38 @@
-var hljs = require('highlight.js');
-var escape = require('markdown-it')().utils.escapeHtml;
-var katex = require('katex');
-var MarkdownIt = require('markdown-it');
+import escape from 'escape-html';
+import hljs from 'highlight.js';
+import katex = require('katex');
+import MarkdownIt from 'markdown-it';
+import MarkdownItMath from 'markdown-it-math';
 
 import * as logger from './logger';
 
-let md = new MarkdownIt({
+const md = new MarkdownIt({
   html: true,
   linkify: false,
   typographer: false,
-  highlight: function (str: string, lang:string) {
+  highlight: (str: string, lang: string) => {
     if (lang && hljs.getLanguage(lang)) {
       try {
         return '<pre class="hljs"><code>' +
           hljs.highlight(lang, str, true).value +
           '</code></pre>';
-      } catch (_) { }
+      } catch (err) {
+        logger.warn('highlight.js unable to highlight code block ' + err);
+       }
     }
     return '<pre class="hljs"><code>' +
       escape(str) +
       '</code></pre>';
-  }
-}).use(require('markdown-it-math'), {
+  },
+}).use(MarkdownItMath, {
   inlineOpen: '$',
   inlineClose: '$',
   blockOpen: '$$',
   blockClose: '$$',
-  inlineRenderer: function (str: string) {
+  inlineRenderer: (str: string) => {
     try {
       return katex.renderToString(str, {
-        throwOnError: false
+        throwOnError: false,
       });
     } catch (err) {
       logger.warn('Error parsing inline math. Rendering as raw latex expression "' + str + '"');
@@ -37,20 +40,20 @@ let md = new MarkdownIt({
       return escape(str);
     }
   },
-  blockRenderer: function (str: string) {
+  blockRenderer: (str: string) => {
     try {
       return katex.renderToString(str, {
         displayMode: true,
-        throwOnError: false
+        throwOnError: false,
       });
     } catch (err) {
       logger.warn('Error parsing block math. Rendering as raw latex expression "' + str + '"');
       logger.warn(err);
       return escape(str);
     }
-  }
+  },
 });
 
 export function htmlify(content: string) {
   return md.render(content);
-};
+}

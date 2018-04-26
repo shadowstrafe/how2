@@ -1,14 +1,14 @@
-var path = require('path');
+import path from 'path';
 
-interface AppConfiguration {
+interface IAppConfiguration {
   sourceDirpath: string;
   manifestFilepath: string;
   expressPort: string;
-  logLevel: string
+  logLevel: string;
 }
 
-var env = process.env;
-var config = <AppConfiguration> {};
+const env = process.env;
+const config = {} as IAppConfiguration;
 
 if (env.HOW2_SOURCE_DIRPATH) {
   config.sourceDirpath = path.resolve(env.HOW2_SOURCE_DIRPATH);

@@ -1,26 +1,26 @@
-class Theme {
+interface ITheme {
     hljs: string;
     cls: string;
 }
 
-interface ThemeCollection {
-    [index: string]: Theme;
+interface IThemeCollection {
+    [index: string]: ITheme;
 }
 
-const THEMES: ThemeCollection = {
-  'light': {
-    cls: 'theme-light',
-    hljs: 'solarized-light.css'
-  },
-  'dark': {
+const THEMES: IThemeCollection = {
+  dark: {
     cls: 'theme-dark',
-    hljs: 'solarized-dark.css'
-  }
+    hljs: 'solarized-dark.css',
+  },
+  light: {
+    cls: 'theme-light',
+    hljs: 'solarized-light.css',
+  },
 };
 
-const DEFAULT_THEME: Theme = THEMES['light'];
+const DEFAULT_THEME: ITheme = THEMES.light;
 
-export function getTheme (themeName: string): Theme {
+export function getTheme(themeName: string): ITheme {
   if (hasTheme(themeName)) {
     return THEMES[themeName];
   } else {

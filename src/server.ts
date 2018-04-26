@@ -3,23 +3,23 @@ import express from 'express';
 import moment from 'moment';
 import path from 'path';
 
-import * as logger from './logger';
 import config from './config';
-import { htmlify } from './htmlify';
-import { How2Article } from './How2Article';
-import { getTheme, hasTheme } from './themes';
+import { IHow2Article } from './How2Article';
 import * as db from './how2db';
+import { htmlify } from './htmlify';
+import * as logger from './logger';
+import { getTheme, hasTheme } from './themes';
 
 const PORT = config.expressPort;
 const SOURCE_DIRPATH = config.sourceDirpath;
 
-var app = express();
+const app = express();
 
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
 // Logging
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   logger.verbose('server.js: ' + req.method + ' ' + req.originalUrl);
   next();
 });
@@ -31,25 +31,25 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 // Setup cookie middleware
 app.use(cookieParser());
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.render('index', {
     title: 'How 2',
     search: '',
     searchAutofocus: true,
-    theme: getTheme(req.cookies.theme)
+    theme: getTheme(req.cookies.theme),
   });
 });
 
-app.get('/how2/*.html', function (req, res) {
+app.get('/how2/*.html', (req, res) => {
   try {
-    var howto = db.get(req.params[0]);
+    const howto = db.get(req.params[0]);
     if (!howto) {
       logger.debug('server.js: GET how2 id=' + req.params[0] + ' Not Found');
       res.sendStatus(404);
       return;
     }
 
-    var templateData = {
+    res.render('how2', {
       content: htmlify(howto.body),
       date: moment(howto.date).local().format('D MMM YYYY, hh:mm a'),
       version: howto.version,
@@ -58,40 +58,38 @@ app.get('/how2/*.html', function (req, res) {
       category: howto.category,
       search: howto.category.replace('/', ' '),
       searchAutofocus: false,
-      theme: getTheme(req.cookies.theme)
-    };
-
-    res.render('how2', templateData);
+      theme: getTheme(req.cookies.theme),
+    });
   } catch (err) {
     res.send(err);
   }
 });
 
-app.get('/search', function (req, res) {
-  var q = req.query.q;
-  let howtos;
+app.get('/search', (req, res) => {
+  const q = req.query.q;
+  let howtos: IHow2Article[];
   if (q) {
     howtos = db.search(q);
   } else {
     howtos = db.getAll();
   }
-  var results = howtos.map((val: How2Article) => {
+  const results = howtos.map((val: IHow2Article) => {
     return {
       path: '/how2/' + val.id + '.html',
-      text: val.category + ' | ' + val.title
+      text: val.category + ' | ' + val.title,
     };
   });
   res.render('list', {
     title: 'How 2',
     search: q,
     searchAutofocus: true,
-    results: results,
-    theme: getTheme(req.cookies.theme)
+    results,
+    theme: getTheme(req.cookies.theme),
   });
 });
 
-app.post('/theme/:theme', function (req, res) {
-  var wantedTheme = req.params['theme'];
+app.post('/theme/:theme', (req, res) => {
+  const wantedTheme = req.params.theme;
   logger.debug('Post wanted theme ' + wantedTheme);
   if (hasTheme(wantedTheme)) {
     logger.debug('Setting cookie ' + wantedTheme);
@@ -100,8 +98,8 @@ app.post('/theme/:theme', function (req, res) {
   res.redirect('/');
 });
 
-export function start () {
-  app.listen(PORT, function () {
+export function start() {
+  app.listen(PORT, () => {
     logger.info('Documentation express server listening on port ' + PORT);
   });
 }

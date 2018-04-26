@@ -1,4 +1,4 @@
-export interface How2Article {
+export interface IHow2Article {
     id: string;
     title: string;
     tags: string;

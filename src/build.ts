@@ -1,72 +1,72 @@
 import frontMatter from 'front-matter';
 import fs from 'fs';
 import glob from 'glob';
+import moment from 'moment';
 import path from 'path';
 import slash from 'slash';
-import moment from 'moment';
 
-import * as logger from './logger';
 import config from './config';
+import { IHow2Article } from './How2Article';
 import * as db from './how2db';
-import { How2Article } from './How2Article';
+import * as logger from './logger';
 
-export function buildAll () {
+export function buildAll() {
   glob('**/*.md', {
-    cwd: slash(config.sourceDirpath)
-  }, function (err, matches) {
-    if (err) throw err;
+    cwd: slash(config.sourceDirpath),
+  }, (err, matches) => {
+    if (err) { throw err; }
 
-    var fileIds = matches.map(function (val) {
+    const fileIds = matches.map((val) => {
       return slash(val).replace(/.md$/, '');
     });
 
-    var dbIds = db.getAll().map(function (howto) {
+    const dbIds = db.getAll().map((howto) => {
       return howto.id;
     });
 
     // Remove those in dbIds but not in fileIds
-    var toRemoveIds = dbIds.filter(function (dbId) {
-      return fileIds.some((fileId) =>fileId == dbId);
+    const toRemoveIds = dbIds.filter((dbId) => {
+      return fileIds.some((fileId) => fileId === dbId);
     });
 
-    toRemoveIds.forEach(function (idToRemove) {
+    toRemoveIds.forEach((idToRemove) => {
       db.remove(idToRemove);
     });
 
-    for (let i = 0; i < matches.length; i++) {
-      build(matches[i]);
+    for (const match of matches) {
+      build(match);
     }
   });
 }
 
-export function build (filePath: string) {
+export function build(filePath: string) {
   const relativePath = slash(filePath).replace(/.md$/, '');
   const absPath = path.resolve(config.sourceDirpath, filePath);
   const pathSegments = relativePath.split('/');
   const category = pathSegments.slice(0, -1).join('/');
-  fs.stat(absPath, function (err, stats) {
+  fs.stat(absPath, (err, stats) => {
     if (err) {
       logger.error(err);
       return;
     }
-    var lastModifiedMoment = moment(stats.mtime).utc();
+    const lastModifiedMoment = moment(stats.mtime).utc();
     logger.debug('build.js:' + absPath + ' last modified on ' + lastModifiedMoment.toISOString());
 
-    var existing = db.get(relativePath);
+    const existing = db.get(relativePath);
     if (existing) {
       logger.debug('build.js: existing found with id ' + relativePath + ' with date value of ' + existing.date);
     }
 
     if (!existing || moment(existing.date).utc().isBefore(lastModifiedMoment)) {
-      fs.readFile(absPath, 'utf8', function (err, data) {
-        if (err) {
-          logger.error(err);
+      fs.readFile(absPath, 'utf8', (err2, data) => {
+        if (err2) {
+          logger.error(err2);
           return;
         }
-        let content = frontMatter(data);
-        let metadata = <any> content.attributes;
+        const content = frontMatter(data);
+        const metadata = content.attributes as any;
 
-        var article = <How2Article>{};
+        const article = {} as IHow2Article;
         article.id = relativePath;
         article.tags = pathSegments.slice(0, -1).concat((metadata.tags || [])).join(', ');
         article.body = content.body;
@@ -74,7 +74,7 @@ export function build (filePath: string) {
         if (metadata.title === undefined) {
           logger.warn('"' + absPath + '" is missing a title and will be ignored');
           return;
-        } 
+        }
         article.title = metadata.title;
 
         article.version = metadata.version;
@@ -87,7 +87,7 @@ export function build (filePath: string) {
   });
 }
 
-export function remove (filePath: string) {
-  var id = slash(filePath).replace(/.md$/, '');
+export function remove(filePath: string) {
+  const id = slash(filePath).replace(/.md$/, '');
   db.remove(id);
 }
