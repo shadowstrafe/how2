@@ -7,6 +7,8 @@
     "start": "node dist/main.js",
     "dev": "cross-env NODE_ENV=development nodemon dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-ts": "tsc -w",
+    "watch-sass": "node-sass -w src/public/css/main.scss dist/public/css/main.min.css --output-style compressed",
     "build": "npm run build-sass && npm run build-ts && npm run tslint && npm run copy-static-assets",
     "build-ts": "tsc",
     "build-sass": "node-sass src/public/css/main.scss dist/public/css/main.min.css --output-style compressed",
