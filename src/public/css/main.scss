@@ -141,6 +141,20 @@ samp {
     line-height: initial;
 }
 
+p code {
+    background-clip: padding-box;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    @include themify($themes) {
+        background-color: themed('inlineCodeColor');
+    }
+    display: inline-block;
+    margin: 0 2px -1px;
+    padding: 0px 3px;
+    text-decoration: inherit;
+    vertical-align: baseline;
+}
+
 b,
 strong {
     font-weight: bold;
