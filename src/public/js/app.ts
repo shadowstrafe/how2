@@ -1,6 +1,5 @@
-import $ from 'jquery';
-
 $(document).ready(() => {
-  // Place JavaScript code here...
-
+  $('#scroll-top-btn').click(() => {
+    $(window).scrollTop(0);
+  });
 });

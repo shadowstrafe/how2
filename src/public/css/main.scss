@@ -242,6 +242,12 @@ table td {
     margin: auto;
 }
 
+#scroll-top-btn {
+    position: fixed;
+    right: 10%;
+    bottom: 10%;
+}
+
 @media only screen and (min-width: 480px) {
     body {
         font-size: 14px;
