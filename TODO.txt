@@ -5,7 +5,6 @@ TODO
 1) Data Persistence? How much performance gains if any will we get if we persist the data to disk.
     Or how about interacting directly with a database?
 1) Longer search bar
-1) "Scroll To Top" button
 1) Settings page?
 1) Client-side editor
 
