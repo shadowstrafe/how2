@@ -142,7 +142,7 @@ samp {
     line-height: initial;
 }
 
-p code {
+p code, li code {
     background-clip: padding-box;
     border-radius: 3px;
     border: 1px solid #ccc;
