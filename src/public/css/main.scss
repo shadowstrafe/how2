@@ -116,11 +116,12 @@ h6 {
 
 blockquote {
     @include themify($themes) {
-        color: themed('blockQuoteColor');
+        border-left-color: themed('blockQuoteColor');
     }
     margin: 0;
     padding-left: 3em;
-    border-left: 0.5em #EEE solid;
+    border-left-width: 0.5em;
+    border-left-style: solid;
 }
 
 hr {
