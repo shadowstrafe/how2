@@ -36,7 +36,7 @@
     "markdown-it": "^8.4.0",
     "markdown-it-math": "^4.1.1",
     "moment": "^2.22.2",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "slash": "^1.0.0"
   },
   "devDependencies": {
